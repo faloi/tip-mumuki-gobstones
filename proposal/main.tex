@@ -1,0 +1,132 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}    
+\usepackage[spanish]{babel} 
+\usepackage{fullpage}       
+\usepackage{csquotes}
+\usepackage[backend=biber,style=numeric,sorting=ynt]{biblatex}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+\newcommand{\FFcomment}[1]{{\color{red}{\Huge FIDEL dice:} {#1}}}
+
+\addbibresource{links.bib}
+
+\title{Propuesta de Trabajo de Inserción Profesional}
+\date{\today}
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%   HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+% \textsc{\LARGE Propuesta de Trabajo de Inserción Profesional}\\[1.5cm] % Name of your university/college
+
+%----------------------------------------------------------------------------------------
+%   TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+{ \huge \bfseries Propuesta de Trabajo de Inserción Profesional}\\[0.4cm] % Title of your document
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+ 
+
+\Large \emph{Título:}\\
+Implementación de un runner de Gobstones para la plataforma Mumuki
+\bigskip
+
+\Large \emph{Alumno:}\\
+Federico Aloi
+\bigskip
+
+\Large \emph{Director:}\\
+Dr. Pablo E. Martínez López
+\bigskip
+
+\Large \emph{Codirector:}\\
+Ing. Franco Bulgarelli
+\bigskip
+
+\Large \emph{Carrera:}\\
+Tecnicatura Universitaria en Programación Informática
+
+\bigskip
+\bigskip
+\bigskip
+
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{logo-unq.jpg}\\[1cm]
+
+\end{titlepage}
+
+\maketitle
+
+\section{Introducción}
+
+\subsection{Gobstones, una nueva forma de aprender a programar}
+Gobstones es un lenguaje conciso de sintaxis razonablemente simple, orientado a personas que no tienen conocimientos previos en programación. El lenguaje maneja distintos componentes propios, ideados con el fin de aprender a resolver problemas en programación, pero al mismo tiempo intentando volver atractivo el aprendizaje, para lograr captar la atención y capacidad de asombro del estudiante.\cite{Gobstones} 
+
+El método por excelencia para programar en Gobstones es mediante la herrameinta PyGobstones\cite{PyGobstones}, la cual provee tanto un editor de texto, con resaltador de la sintaxis del lenguaje como lo necesario para ejecutar y visualizar programas Gobstones (compilador, intérprete, editor de tablero). Además de proveer una interfaz gráfica para todo lo mencionado, la herramienta también permite compilar y ejecutar programas desde una terminal, lo cual abre la posibilidad de integrar Gobstones con otras herramientas.
+
+Actualmente se utiliza como soporte tecnológico de la materia \textit{Introducción a la Programación} perteneciente a la carrera \textit{Tecnicatura Universitaria en Programación Informática} que se dicta en nuestra casa de estudios, y en materias análogas de varios colegios secundarios, de los cuales destacaremos el \textit{Instituto Sagrado Corazón Al.Cal.}, ubicado en Villa Jardín, Lanús Oeste.
+
+\subsection{Mumuki, educación libre de la programación}
+Mumuki es un software educativo para enseñar a programar mediante la resolución de problemas, en un proceso dirigido por apuntes y guías prácticas en las que la teoría surge a medida que se avanza. Esta herramienta se presenta al estudiante como una aplicación Web interactiva, en la que se articulan explicaciones y ejemplos con la opción de que cada uno realice su propia solución y la plataforma la pruebe y corrija instantáneamente, orientando acerca de los aciertos y errores. 
+
+Al ser toda la plataforma software libre, es posible agregar soporte para cualquier lenguaje nuevo, implementando un runner\cite{runner} que lo soporte. El runner es el componente de software encargado de recibir la solución propuesta por el alumno, agregarle el código adicional correspondiente al ejercicio (previamente definido por el docente), compilar y validar que se haya llegado al resultado esperado. Actualmente existen runners para Haskell, Prolog, Javascript y Ruby, los cuales también son de código abierto y pueden ser usados como guía para desarrollar otros nuevos.
+
+\section{Problema}
+Basándonos en la experiencia enseñando a programar con Gobstones en la escuela secundaria mencionada anteriormente, podemos fácilmente arribar a una conclusión: es muy difícil lograr estimular a los/as estudiantes para que ejerciten en sus casas.
+
+Si bien este trabajo no pretende expedirse rotundamente al respecto, sí podemos plantear algunas situaciones desfavorables que creemos que inciden en el problema.
+
+\begin{itemize}
+    \item \textbf{Complejidad tecnológica de un lenguaje de programación:} instalar \texttt{PyGobstones} no resulta trivial para aquellas personas menos experimentadas y esto resulta muchas veces una traba en aquel/la que desea empezar a practicar.
+    \item \textbf{Dificultad para probar la validez de una solución:} si bien es deseable que un curso inicial de programación enseñe a probar los programas que se escriben, sabemos que en muchos casos el alumno no está capacitado para hacerlo.
+    \item \textbf{Necesidad de un seguimiento personalizado:} la relación entre la cantidad de docentes y de estudiantes que suele haber en las instituciones educativas hace dificultosa una asistencia personalizada que de cuenta del ritmo personal en que cada uno va comprendiendo y poniendo en práctica los conceptos. 
+\end{itemize}
+
+A partir del uso de la plataforma Mumuki en la cátedra \textit{Paradigmas de Programación} de la carrera \textit{Ingeniería en Sistemas de Información} de la Universidad Tecnológica Nacional, ha quedado demostrado que la herramienta Mumuki es útil para hacerle frente a las situaciones mencionadas, resultando así un buen reemplazo a las guías de ejercicios tradicionales.
+
+Por todo lo expuesto, creemos que contar con soporte para Gobstones en la plataforma Mumuki es importante y esa será la propuesta que desarrollaremos a continuación.
+
+\section{Propuesta}
+La propuesta es entonces desarrollar un runner de Mumuki, componente de software encargado de brindar soporte para Gobstones dentro de la plataforma.
+
+En nuestro caso, constará de las siguientes funcionalidades:
+
+\begin{itemize}
+    \item Ejecutar un programa, procedimiento o función y mostrar su resultado
+    \item Validar que el código provisto sea correcto, en tanto llegue al resultado esperado
+    \item Validar que el código provisto cumpla con las expectativas \cite{expectativas}, asegurando así que el alumno haya utilizado las herramientas correctas
+\end{itemize}
+
+En cuanto a la tecnología, se utilizará el lenguaje de programación Ruby ya que la plataforma brinda un mayor soporte para realizar integraciones en este lenguaje, pudiendo reutilizar parte del trabajo de los otros runners. Sin embargo, utilizaremos \texttt{PyGobstones} como soporte para la compilación y ejecución, adaptando lo que fuese necesario para que ambas piezas de software puedan integrarse.
+
+\section{Plan de trabajo}
+El trabajo será organizado en sprints de 4 semanas cada uno. Cada sprint comprenderá todas las tareas del ciclo de desarrollo: diseño, implementación, testing y puesta en producción.
+
+Los sprints se organizarán de la siguiente manera:
+
+\begin{itemize}
+    \item \textbf{Sprint 1:} Framework de testing
+    \item \textbf{Sprint 2:} Gobstones Runner, sólo con testing
+    \item \textbf{Sprint 3:} Expectativas
+    \item \textbf{Sprint 4:} Confección de 3 guías de ejercicios, tratando los siguientes temas: introducción, procedimientos y repetición simple
+\end{itemize}
+
+\printbibliography
+
+\end{document}
