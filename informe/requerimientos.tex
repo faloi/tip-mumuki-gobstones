@@ -1,6 +1,8 @@
-\section{Desarrollo}
+\section{Requerimientos}
 
-\subsection{Arquitectura de Mumuki}
+\subsection{Mumuki}
+
+\subsubsection{Arquitectura}
 \borrador{
   \begin{itemize}
     \item \textit{plataforma:} donde el estudiante sube sus soluciones y ve el feedback
@@ -15,7 +17,7 @@
   \end{itemize}
 }
 
-\subsection{Requisitos para poder construir el runner}
+\subsubsection{Requisitos para poder implementar un runner}
 \borrador{
   \begin{enumerate}
     \item ejecutar un programa Gobstones
@@ -23,4 +25,11 @@
     \item una representación del AST para poder evaluar las expectativas
     \item una representación HTML de los tableros para poder mostrarle al estudiante
   \end{enumerate}
+}
+
+\subsection{Gobstones}
+
+\subsubsection{Arquitectura}
+\borrador{
+  PyGobstones consta de un compilador/intérprete y de una GUI. En este trabajo no utilizaremos la GUI, ya que está construida para una aplicación Desktop y no puede ser reutilizada dentro un sitio web.
 }
