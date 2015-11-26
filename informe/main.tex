@@ -19,78 +19,10 @@
 
 \maketitle
 
-\section{Introducción}
-
-\subsection{Gobstones, una nueva forma de aprender a programar}
-\borrador{
-  \begin{itemize}
-    \item qué es Gobstones (lenguaje + secuencia didáctica)
-    \item qué herramientas existen hoy en día
-    \item dónde se usa (unq, belgrano, sarmiento, alcal, ameghino)
-  \end{itemize}
-}
-
-\subsection{Mumuki, educación libre de la programación}
-\borrador{
-  \begin{itemize}
-    \item qué es el proyecto Mumuki
-    \item por qué herramientas está compuesto actualmente (todas o sólo las que son de interés para este trabajo?)
-    \item dónde se usa (utn, unq, undav, alcal)
-  \end{itemize}
-}
-
-\section{Desarrollo}
-
-\subsection{Arquitectura de Mumuki}
-\borrador{
-  \begin{itemize}
-    \item \textit{plataforma:} donde el estudiante sube sus soluciones y ve el feedback
-    \item \textit{runners:} servicios web encargados de probar los programas que escribe el estudiante
-    \item diagrama de secuencia de la arquitectura:
-      \begin{itemize}
-        \item alumno envia solución
-        \item plataforma envia solución, tests, expectativas y código adicional en una request al runner
-        \item el runner compila, corre los tests, chequea las expectativas y devuelve el resultado
-        \item la plataforma renderiza los resultados
-      \end{itemize}
-  \end{itemize}
-}
-
-\subsection{Requisitos para poder construir el runner}
-\borrador{
-  \begin{enumerate}
-    \item ejecutar un programa Gobstones
-    \item probar que el resultado (tablero final o valor de retorno) coincide con lo esperado
-    \item una representación del AST para poder evaluar las expectativas
-    \item una representación HTML de los tableros para poder mostrarle al estudiante
-  \end{enumerate}
-}
-
-\subsection{Cómo atacar los requisitos}
-\borrador{
-  \begin{enumerate}
-    \item PyGobstones provee una forma para ejecutar programas por consola
-    \item no había nada
-    \item PyGobstones provee una forma para obtener el AST de un programa por consola, pero tenía algunos problemas:
-      \begin{itemize}
-        \item no había forma de pedirle que no ejecutara el programa, por lo tanto no se podían parsear programas que producieran \textit{BOOM}
-        \item todas las funciones y procedimientos tenían que estar definidos, por lo tanto no se podían parsear soluciones que dependieran de código adicional (sobre el que no interesa correr ningún tipo de validación porque lo provee el docente)
-        \item la representación del AST no es standard (aún no resuelto)
-      \end{itemize}
-    \item había una representación pero le faltaba trabajo, no se comprendía por completo y no respetaba la identidad visual de Gobstones
-  \end{enumerate}
-}
-
-\subsection{Tecnología elegida}
-\borrador{
-  \begin{itemize}
-    \item la interacción con PyGobstones se realizaría por consola, por lo cual la elección del lenguaje no influía en nada
-    \item ya existía mumukit, una biblioteca para Ruby (se la llama gema) que resolvía todo lo que tenía que ver con el manejo HTTP
-  \end{itemize}
-}
-
-\section{Conclusiones}
-
-\section{Trabajo futuro}
+\input{introduccion.tex}
+\input{requerimientos.tex}
+\input{implementacion.tex}
+\input{conclusiones.tex}
+\input{trabajo-futuro.tex}
 
 \end{document}

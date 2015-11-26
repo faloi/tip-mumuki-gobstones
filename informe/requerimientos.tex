@@ -1,0 +1,26 @@
+\section{Desarrollo}
+
+\subsection{Arquitectura de Mumuki}
+\borrador{
+  \begin{itemize}
+    \item \textit{plataforma:} donde el estudiante sube sus soluciones y ve el feedback
+    \item \textit{runners:} servicios web encargados de probar los programas que escribe el estudiante
+    \item diagrama de secuencia de la arquitectura:
+      \begin{itemize}
+        \item alumno envia solución
+        \item plataforma envia solución, tests, expectativas y código adicional en una request al runner
+        \item el runner compila, corre los tests, chequea las expectativas y devuelve el resultado
+        \item la plataforma renderiza los resultados
+      \end{itemize}
+  \end{itemize}
+}
+
+\subsection{Requisitos para poder construir el runner}
+\borrador{
+  \begin{enumerate}
+    \item ejecutar un programa Gobstones
+    \item probar que el resultado (tablero final o valor de retorno) coincide con lo esperado
+    \item una representación del AST para poder evaluar las expectativas
+    \item una representación HTML de los tableros para poder mostrarle al estudiante
+  \end{enumerate}
+}
