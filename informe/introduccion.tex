@@ -19,7 +19,7 @@ Si bien cada una de esas herramientas es diferente, podemos identificar ciertas 
   \caracteristica{esconden aspectos netamente tecnológicos}
 \end{itemize}
 
-De las herramientas mencionadas nos concentraremos en Gobstones y Mumuki, considerando que pueden complementarse muy bien, logrando así enriquecer aún más el método de enseñanza de un curso introductorio en programación. Veremos a continuación de qué se ocupa cada uno de estos proyectos.
+De las herramientas mencionadas, el presente trabajo se concentrará en Gobstones y Mumuki, considerando que pueden complementarse muy bien, logrando así enriquecer aún más el método de enseñanza de un curso introductorio en programación. Veremos a continuación de qué se ocupa cada uno de estos proyectos.
 
 \subsection{Gobstones, una nueva forma de aprender a programar}
 El proyecto Gobstones consta de dos componentes fundamentales: una secuencia didáctica y un lenguaje de programación que permite ponerla en práctica.
@@ -30,14 +30,21 @@ En cuanto al lenguaje, escribe que ``Gobstones es un lenguaje conciso de sintaxi
 \\\\
 Además de ser utilizado en la materia Introducción a la Programación de la Tecnicatura antes mencionada, Gobstones se utiliza actualmente en la Escuela Fiorentino Ameghino de Florencio Varela y en el Instituto Sagrado Corazón Al.Cal. de Villa Jardín.
 \\\\
-Tanto la escritura de programas como su ejecución ocurren dentro de la herramienta \nombre{PyGobstones}\footnote{Puede descargarse desde \url{http://www.gobstones.org/?page_id=30}}, desarrollada por el Lic. Pablo Barenbaum en conjunto con estudiantes de TPI. Al momento de escribir este trabajo, existe un equipo encargado de mantener el software, liderado por el Lic. Ary Batista, al cual hemos acudido en diferentes instancias durante el desarrollo para evacuar dudas sobre el funcionamiento, reportar errores y solicitar algunas extensiones.
+Tanto la escritura de programas como su ejecución ocurren dentro de la herramienta \nombre{PyGobstones}\footnote{Puede descargarse desde \url{http://www.gobstones.org/?page_id=30}}, desarrollada por el Lic. Pablo Barenbaum en conjunto con estudiantes de TPI. Al momento de escribir este trabajo, existe un equipo encargado de mantener el software, liderado por el Lic. Ary Batista, al cual he acudido en diferentes instancias durante el desarrollo para evacuar dudas sobre el funcionamiento, reportar errores y solicitar algunas extensiones.
 
 \subsection{Mumuki, educación libre de la programación}
-\borrador{
-  \begin{itemize}
-    \item qué es el proyecto Mumuki
-    \item por qué herramientas está compuesto actualmente (todas o sólo las que son de interés para este trabajo?)
-    \item dónde se usa (utn, unq, undav, alcal)
-    \item existe un equipo de desarrollo, liderado por el Ing. Franco Bulgarelli, que se puso a disposición del desarrollo de este trabajo
-  \end{itemize}
-}
+Mumuki es un proyecto que apunta a universalizar el acceso a la educación libre, gratuita y de calidad; enfocándose principal pero no excluyentemente en la enseñanza de la programación. Según sus fundadores es, además, ``un software educativo para aprender a programar a partir de la resolución de problemas; plantea enseñar conceptos de programación, en un proceso conducido por guías prácticas en las que la teoría surge a medida que se avanza. Esta herramienta se presenta al estudiante como una aplicación Web interactiva, en la que se articulan explicaciones y ejemplos con la opción de que cada uno realice su propia solución y la plataforma la pruebe y corrija instantáneamente, orientando acerca de los aciertos y errores. Está diseñado para ser utilizado tanto a distancia, como recurso complementario al aula y con el ritmo propio que cada estudiante le imprime a su forma de practicar, como en espacios educativos formales de laboratorios o talleres, donde cada alumno -o grupo- trabaja con su máquina, con la presencia orientadora de los docentes.''\cite{PaperMumuki}
+\\\\
+Está compuesto por las siguientes herramientas:
+\begin{itemize}
+  \caracteristica{la plataforma web} el entorno donde los estudiantes resuelven los ejercicios de programación y ven el \textit{feedback} generado por la herramienta. Cada estudiante tiene su propia cuenta de usuario y puede ver en todo momento su progreso y las soluciones que envió
+  \caracteristica{los \textit{runners}} servicios web que se encargan de compilar, ejecutar y probar los programas enviados por los estudiantes
+  \caracteristica{Classroom} herramienta pensada para realizar el seguimiento de los estudiantes, diseñada para ser utilizada tanto dentro como fuera del aula
+  \caracteristica{Bibliotheca} repositorio de guías y ejercicios, públicamente accesible y con posibilidad de crear ejercicios completamente nuevos o adaptar alguno existente para cumplir con necesidades particulares
+\end{itemize}
+\\\\
+Existe una notable comunidad de desarrolladores involucrada en el proyecto, liderados por el Ing. Franco Bulgarelli. A partir de la realización de la extensión que explicaré más adelante, me involucré activamente en el equipo del proyecto, del cual también soy responsable hoy en día.
+\\\\
+Al día de hoy, la suite de herramientas está siendo utilizada en varias universidades: Universidad Tecnológica Nacional (\nombre{UTN}, \nombre{UNQ} y \nombre{UNDAV}); y en un colegio secundario, el Instituto Sagrado Corazón Al.Cal. de Villa Jardín.
+
+\subsection{Problema}
