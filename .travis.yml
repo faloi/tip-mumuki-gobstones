@@ -9,6 +9,7 @@ addons:
     - dvipng
     - texlive-bibtex-extra
     - biblatex
+    - latex-xcolor
 script:
   - mkdir _build
   - cd informe
