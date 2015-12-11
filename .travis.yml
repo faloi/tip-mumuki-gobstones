@@ -8,6 +8,7 @@ addons:
     - texlive-latex-recommended
     - dvipng
     - texlive-bibtex-extra
+    - biblatex
 script:
   - mkdir _build
   - cd informe
