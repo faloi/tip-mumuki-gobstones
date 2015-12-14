@@ -3,22 +3,20 @@
 \newcommand{\caracteristica}[1]{\item \textbf{#1:}}
 
 \section{Introducción}
-La informática ha tenido sus inicios entre matemáticos (como Alan Turing\footnote{Turing} y John von Neumann\footnote{VonNeumann}) y, algunas décadas después, con la invención del circuito integrado, los electrónicos. Debido a las limitaciones tecnológicas de aquellas primeras computadoras es razonable que la primera percepción de programación estuviera fuertemente acoplada a la máquina, ya que resultaba imposible pensar una cosa sin la otra. Como ejemplo de esto basta mencionar la conocida anécdota del \textit{bug}\footnote{Bug} que persiste hoy en día como metáfora asociada a una falla dentro de un programa.
+La informática ha tenido sus inicios entre matemáticos (como Alan Turing\footnote{Turing} y John von Neumann\footnote{VonNeumann}) y, algunas décadas después con la invención del circuito integrado, se han incorporado también los ingenieros y técnicos electrónicos. Debido a las limitaciones tecnológicas de aquellas primeras computadoras es razonable que la primera percepción de programación estuviera fuertemente acoplada a la máquina, ya que resultaba imposible pensar una cosa sin la otra. Como ejemplo de esto basta mencionar la conocida anécdota del \textit{bug}\footnote{Bug} que persiste hoy en día como metáfora asociada a una falla dentro de un programa.
 
-\borrador{
-Mini mini reseña de cómo se fue pasando del bajo al alto nivel, y cómo esto era necesario porque el hardware no daba para más.
-}
+A medida que el hardware y la ciencia fueron avanzando, surgieron nuevas formas de programar. Es así que surgen la programación funcional (\borrador{con qué lenguaje y en qué año}), la programación imperativa (\borrador{con qué lenguaje y en qué año}) y la programación orientada a objetos (\borrador{con qué lenguaje y en qué año}).
 
-Esta manera de percibir a la programación puede verse reflejada en muchos cursos iniciales, donde se hace énfasis en cuestiones que tienen más que ver con el \textit{hardware} subyacente que con el \textit{software} que se pretende construir: se favorece a la performance del programa por sobre otros atributos como expresividad, abstracción, declaratividad. Si bien este enfoque es válido en ciertos contextos, en muchos otros (y sobre todo en un primer acercamiento a la programación) no sólo que no aportan sino que muchas veces lo único que se logra es ahuyentar a los estudiantes, transmitiendo que la programación es un arte oscuro e incomprensible, exclusivo para unos pocos.
+A pesar de la gran cantidad de opciones que existen hoy en día para programar, muchos cursos iniciales siguen apegados a los inicios de la ciencia, haciendo énfasis en cuestiones que tienen más que ver con el \textit{hardware} subyacente que con el \textit{software} que se pretende construir: se favorece a la performance del programa por sobre otros atributos como expresividad, abstracción, declaratividad. Si bien este enfoque es válido en ciertos contextos, definitivamente no es adecuado para un primer acercamiento a la programación; en muchos casos lo único que se logra es ahuyentar a los estudiantes, transmitiendo que la programación es un arte oscuro e incomprensible, exclusivo para unos pocos. Analizar las causas de este fenómeno sería sin dudas interesante, pero escapa al objetivo de este trabajo. \borrador{capaz se puede hacer referencia a alguna de las cosas que escribió Sadosky, revisar}
 
-En contraposición a este enfoque, han surgido nuevas formas de enseñar a programar que pretenden ser más inclusivas y más didácticas, haciendo uso intensivo de herramientas tecnológicas para asistir al docente en su rol de educador. Algunas herramientas que han ido surgiendo en los últimos años son: Logo, Alice, Scratch, y más recientemente Pilas Bloques, Wollok, Gobstones y Mumuki. \borrador{citar o explicar qué son todas esas cosas que nombré}.
+En contraposición a este enfoque, en los últimos tiempos han cobrado relevancia otras formas de enseñar a programar que pretenden ser más inclusivas y más didácticas, haciendo uso intensivo de herramientas tecnológicas para asistir al docente en su rol de educador. Algunas herramientas que han ido surgiendo en los últimos años son: Alice, Scratch, y más recientemente Pilas Bloques, Wollok, Gobstones y Mumuki. \borrador{citar o explicar qué son todas esas cosas que nombré}.
 
 Si bien cada una de esas herramientas es diferente, podemos identificar ciertas características compartidas:
 \begin{itemize}
-  \caracteristica{componentes visuales}
-  \caracteristica{pensadas para el ámbito educativo}
-  \caracteristica{requieren un trabajo fuerte por parte del docente}
-  \caracteristica{esconden aspectos netamente tecnológicos}
+  \caracteristica{componentes visuales} rompiendo con el estereotipo de la pantalla negra con mucho texto, estas herramientas hacen fuerte uso de distintos recursos visuales (imágenes, animaciones, gráficos, etc) como medio para transmitir ideas y ejecutar algoritmos.
+  \caracteristica{pensadas para el ámbito educativo} no pretenden ser lenguajes que sirvan para resolver cualquier problema, sino que se concentran en lo mínimo necesario para dar soporte a aquellos conceptos que se pretende enseñar
+  \caracteristica{requieren un trabajo fuerte por parte del docente} el diseño de un ejercicio suele ser más costoso que en otras tecnologías más clásicas, ya que el docente debe encargarse de proveer los componentes visuales y muchas veces código adicional que, en conjunto con la solución del alumno, conforma el programa completo
+  \caracteristica{esconden aspectos netamente tecnológicos} cuestiones típicas de entrada y salida como manejo de archivos o de memoria no existen en estas herramientas, nuevamente con el objetivo de simplificar al máximo las herramientas disponibles para que los estudiantes sólo deban preocuparse por los conceptos
 \end{itemize}
 
 De las herramientas mencionadas, el presente trabajo se concentrará en Gobstones y Mumuki, considerando que pueden complementarse muy bien, logrando así enriquecer aún más el método de enseñanza de un curso introductorio en programación. Veremos a continuación de qué se ocupa cada uno de estos proyectos.
@@ -56,7 +54,7 @@ Mumuki es un proyecto que apunta a universalizar el acceso a la educación libre
 Está compuesto por las siguientes herramientas:
 \begin{itemize}
   \caracteristica{Atheneum} el entorno web donde los estudiantes resuelven los ejercicios de programación y ven el \textit{feedback} generado por la herramienta. Cada estudiante tiene su propia cuenta de usuario y puede ver en todo momento su progreso y las soluciones que envió
-  \caracteristica{los \textit{runners}} servicios web que se encargan de compilar, ejecutar y probar los programas enviados por los estudiantes
+  \caracteristica{los \runner s} servicios web que se encargan de compilar, ejecutar y probar los programas enviados por los estudiantes
   \caracteristica{Classroom} herramienta pensada para realizar el seguimiento de los estudiantes, diseñada para ser utilizada tanto dentro como fuera del aula
   \caracteristica{Bibliotheca} repositorio de guías y ejercicios, públicamente accesible y con posibilidad de crear ejercicios completamente nuevos o adaptar alguno existente para cumplir con necesidades particulares
 \end{itemize}
