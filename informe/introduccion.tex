@@ -3,22 +3,33 @@
 \newcommand{\caracteristica}[1]{\item \textbf{#1:}}
 
 \section{Introducción}
-La informática ha tenido sus inicios entre matemáticos (como Alan Turing\footnote{Turing} y John von Neumann\footnote{VonNeumann}) y, algunas décadas después, con la invención del circuito integrado, los electrónicos. Debido a las limitaciones tecnológicas de aquellas primeras computadoras es razonable que la primera percepción de programación estuviera fuertemente acoplada a la máquina, ya que resultaba imposible pensar una cosa sin la otra. Como ejemplo de esto basta mencionar la conocida anécdota del \textit{bug}\footnote{Bug} que persiste hoy en día como metáfora asociada a una falla dentro de un programa.
 
-\borrador{
-Mini mini reseña de cómo se fue pasando del bajo al alto nivel, y cómo esto era necesario porque el hardware no daba para más.
-}
+\sepfootnotecontent
+  {Turing}
+  {Nacido en 1912 en Londres, Alan Mathison Turing fue uno de los fundadores de la computación. Fue responsable de la creación de la Máquina de Turing, considerada como un primer modelo de las computadoras de propósito general.}
 
-Esta manera de percibir a la programación puede verse reflejada en muchos cursos iniciales, donde se hace énfasis en cuestiones que tienen más que ver con el \textit{hardware} subyacente que con el \textit{software} que se pretende construir: se favorece a la performance del programa por sobre otros atributos como expresividad, abstracción, declaratividad. Si bien este enfoque es válido en ciertos contextos, en muchos otros (y sobre todo en un primer acercamiento a la programación) no sólo que no aportan sino que muchas veces lo único que se logra es ahuyentar a los estudiantes, transmitiendo que la programación es un arte oscuro e incomprensible, exclusivo para unos pocos.
+\sepfootnotecontent
+  {VonNeumann}
+  {Nacido en 1903 en Budapest, formalizó la arquitectura de computadores que lleva su nombre. Aunque hoy en día las arquitecturas han evolucionado y ya no cuadran en su diseño, todavía se la sigue enseñando como primera noción del funcionamiento de una computadora.}
 
-En contraposición a este enfoque, han surgido nuevas formas de enseñar a programar que pretenden ser más inclusivas y más didácticas, haciendo uso intensivo de herramientas tecnológicas para asistir al docente en su rol de educador. Algunas herramientas que han ido surgiendo en los últimos años son: Logo, Alice, Scratch, y más recientemente Pilas Bloques, Wollok, Gobstones y Mumuki. \borrador{citar o explicar qué son todas esas cosas que nombré}.
+\sepfootnotecontent
+  {Bug}
+  {Aunque los orígenes del término se le atribuyen a Thomas Edison, la primera anécdota conocida de su uso en la informática fue reportada por Grace Murray Hopper en 1947. La historia cuenta que al revisar la computadora Mark II en búsqueda de problemas, se encontró una polilla que provocaba que uno de los relés quedara abierto. Tanto la polilla como la anécdota quedarían luego inmortalizadas en la bitácora de trabajo con la frase \textit{``first actual case of bug being found''} (inglés para \textit{``primer caso real de un bicho siendo encontrado''}).}
+
+La informática ha tenido sus inicios entre matemáticos (como Alan Turing\sepfootnote{Turing} y John von Neumann\sepfootnote{VonNeumann}) y, algunas décadas después con la invención del circuito integrado, se han incorporado también ingenieros y técnicos electrónicos. Debido a las limitaciones tecnológicas de aquellas primeras computadoras es razonable que la primera percepción de programación estuviera fuertemente acoplada a la máquina, ya que resultaba imposible pensar una cosa sin la otra. Como ejemplo de esto basta mencionar la conocida anécdota del \textit{bug}\sepfootnote{Bug} que persiste hoy en día como metáfora asociada a una falla dentro de un programa.
+
+A medida que el hardware y la ciencia fueron avanzando, surgieron nuevas formas de programar cada vez más abstractas y alejadas de la máquina, basándose en modelos que se ajustan mucho mejor a la forma de pensar que tenemos los humanos. Es así que surgen la programación funcional (con LISP como primer lenguaje, surgido en 1960\cite{Turner}), la programación imperativa (con Fortran como primer lenguaje, surgido en 1957) y la programación orientada a objetos (con Simula como primer lenguaje, surgido en 1967\cite{wegner1990concepts}).
+
+Aún sabiendo que existen esos distintos paradigmas, muchos cursos iniciales se siguen dictando usando lenguajes de bajo nivel como soporte, haciendo énfasis en cuestiones que tienen más que ver con el \textit{hardware} subyacente que con el \textit{software} que se pretende construir: se favorece a la performance del programa por sobre otros atributos como expresividad, abstracción, declaratividad. Si bien este enfoque es válido en ciertos contextos, definitivamente no es adecuado para un primer acercamiento a la programación; en muchos casos lo único que se logra es ahuyentar a los estudiantes, transmitiendo que la programación es un arte oscuro e incomprensible, exclusivo para unos pocos. Analizar las causas de este fenómeno sería sin dudas interesante, pero escapa al objetivo de este trabajo\footnote{Para conocer más al respecto, se recomienda la lectura del documento \citetitle{Sadosky}, publicado por la Fundación Sadosky.}.
+
+En contraposición a este enfoque, en los últimos tiempos han cobrado relevancia otras formas de enseñar a programar que pretenden ser más inclusivas y más didácticas, haciendo hincapié en el \textit{pensamiento computacional}\cite{Wing}. Para lograrlo, es necesario el uso intensivo de herramientas tecnológicas que asistan al docente en su rol de educador, como por ejemplo Alice, Scratch, y más recientemente Pilas Bloques, Wollok, Gobstones y Mumuki.
 
 Si bien cada una de esas herramientas es diferente, podemos identificar ciertas características compartidas:
 \begin{itemize}
-  \caracteristica{componentes visuales}
-  \caracteristica{pensadas para el ámbito educativo}
-  \caracteristica{requieren un trabajo fuerte por parte del docente}
-  \caracteristica{esconden aspectos netamente tecnológicos}
+  \caracteristica{componentes visuales} rompiendo con el estereotipo de la pantalla negra con mucho texto, estas herramientas hacen fuerte uso de distintos recursos visuales (imágenes, animaciones, gráficos, etc) como medio para transmitir ideas, obtener resultados y visualizar algoritmos;
+  \caracteristica{pensadas para el ámbito educativo} no pretenden ser lenguajes que sirvan para resolver cualquier problema, sino que se concentran en lo mínimo necesario para dar soporte a aquellos conceptos que se pretende enseñar;
+  \caracteristica{requieren un trabajo fuerte por parte del docente} el diseño de un ejercicio suele ser más costoso que en otras tecnologías clásicas, ya que el docente debe encargarse de proveer los componentes visuales y muchas veces código adicional que, en conjunto con la solución del alumno, conforma el programa completo;
+  \caracteristica{esconden aspectos netamente tecnológicos} cuestiones típicas de entrada y salida como manejo de archivos o de memoria no existen en estas herramientas, nuevamente con el objetivo de simplificar al máximo las herramientas disponibles para que los estudiantes sólo deban preocuparse por entender los conceptos fundamentales.
 \end{itemize}
 
 De las herramientas mencionadas, el presente trabajo se concentrará en Gobstones y Mumuki, considerando que pueden complementarse muy bien, logrando así enriquecer aún más el método de enseñanza de un curso introductorio en programación. Veremos a continuación de qué se ocupa cada uno de estos proyectos.
@@ -26,15 +37,15 @@ De las herramientas mencionadas, el presente trabajo se concentrará en Gobstone
 \subsection{Gobstones, una nueva forma de aprender a programar}
 El proyecto Gobstones consta de dos componentes fundamentales: una secuencia didáctica y un lenguaje de programación que permite ponerla en práctica.
 
-Según el Dr. Martínez López, fundador del proyecto,
+Según el Dr. Martínez López, fundador del proyecto:
 
 \begin{quote}
 ``esta secuencia didáctica novedosa, diferente a la tradicional forma de enseñar programación, se diseñó teniendo en cuenta el trabajo con los estudiantes de primer año de la Tecnicatura en Programación Informática (TPI) de la Universidad Nacional de Quilmes, y expresa una síntesis conceptual utilizable con personas que no tienen ninguna experiencia previa en programación, ni demasiada familiaridad con procesos de abstracción.''\cite{LibroGobstones}.
 \end{quote}
 
-La secuencia favorece la abstracción desde el primer momento, prestando especial atención al uso de procedimientos y funciones y postergando otros conceptos como la repetición condicional o el uso de variables hasta el momento en que realmente surge la necesidad de utilizarlos.
+La secuencia favorece la abstracción desde el primer momento, prestando especial atención al uso de procedimientos y funciones y postergando otros conceptos como la repetición condicional (sentencia \textit{while}) o el uso de variables hasta el momento en que realmente surge la necesidad de utilizarlos.
 
-En cuanto al lenguaje, escribe que
+En cuanto al lenguaje, escribe:
 
 \begin{quote}
 ``Gobstones es un lenguaje conciso de sintaxis razonablemente simple, orientado a personas que no tienen conocimientos previos en programación. El lenguaje maneja distintos componentes propios, ideados con el fin de aprender a resolver problemas en programación, pero al mismo tiempo intentando volver atractivo el aprendizaje, para lograr captar la atención y capacidad de asombro del estudiante.''\cite{LibroGobstones}.
@@ -56,7 +67,7 @@ Mumuki es un proyecto que apunta a universalizar el acceso a la educación libre
 Está compuesto por las siguientes herramientas:
 \begin{itemize}
   \caracteristica{Atheneum} el entorno web donde los estudiantes resuelven los ejercicios de programación y ven el \textit{feedback} generado por la herramienta. Cada estudiante tiene su propia cuenta de usuario y puede ver en todo momento su progreso y las soluciones que envió
-  \caracteristica{los \textit{runners}} servicios web que se encargan de compilar, ejecutar y probar los programas enviados por los estudiantes
+  \caracteristica{los \runner s} servicios web que se encargan de compilar, ejecutar y probar los programas enviados por los estudiantes
   \caracteristica{Classroom} herramienta pensada para realizar el seguimiento de los estudiantes, diseñada para ser utilizada tanto dentro como fuera del aula
   \caracteristica{Bibliotheca} repositorio de guías y ejercicios, públicamente accesible y con posibilidad de crear ejercicios completamente nuevos o adaptar alguno existente para cumplir con necesidades particulares
 \end{itemize}
@@ -66,6 +77,8 @@ Existe una notable comunidad de desarrolladores involucrada en el proyecto, lide
 Al día de hoy, la suite de herramientas está siendo utilizada en varias universidades: Universidad Tecnológica Nacional, Universidad Nacional de Quilmes y Universidad Nacional de Avellaneda; y en un colegio secundario, el Instituto Sagrado Corazón Al.Cal. de Villa Jardín.
 
 \subsection{Problema}
-El objeto del presente trabajo es, entonces, lograr que ambas herramientas puedan trabajar en conjunto. Mumuki permite incorporar soporte para nuevos lenguajes mediante la implementación de un \runner, y Gobstones permite ejecutar código por fuera de la herramienta visual, de modo que la integración es factible.
+El objeto del presente trabajo es, entonces, lograr ejecutar y validar programas Gobstones dentro de Mumuki.
 
-En las siguientes secciones contaré cómo fue diseñada la integración y con qué problemas me encontré durante la implementación. Detallaré además las pruebas realizadas sobre el producto final, tanto automatizadas sobre el código como reales con estudiantes de nivel medio y superior.
+Esta plataforma permite incorporar soporte para nuevos lenguajes mediante la implementación de un \runner, y por lo tanto esa será mi tarea. Para poder llevarla a cabo, es necesario que el lenguaje provea una forma de ejecutar programas por línea de comandos y algún framework para escribir pruebas unitarias. Gobstones provee lo primero pero no lo segundo, de modo que la integración que desarrollaré consistirá en crear tal framework para luego poder utilizarlo en el \runner.
+
+En las siguientes secciones contaré cómo fue diseñada la integración y con qué problemas me encontré durante la implementación. Detallaré además las pruebas realizadas sobre el producto final, tanto automatizadas sobre el código como funcionales con estudiantes de nivel medio y superior.
