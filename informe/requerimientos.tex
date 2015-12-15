@@ -26,6 +26,13 @@ El ejercicio es la mínima unidad de contenido: se trata de una descripción de 
 
 De los componentes mencionados en la introducción, sólo nos interesan el Atheneum y los \runner s ya que como vemos en la Figura \ref{fig:FlujoSubmission} son los que intervienen en el proceso que va desde el envío de la solución del estudiante hasta la obtención del resultado.
 
+A grandes rasgos, la comunicación se realiza de la siguiente manera:
+\begin{itemize}
+  \item{El estudiante envia su solución, lo cual produce un POST HTTP hacia el Atheneum.}
+  \item{El Atheneum envia otro POST HTTP al \runner\ correspondiente, agregando las pruebas, expectativas y código adicional del ejercicio.}
+  \item{El \runner\ responde al pedido HTTP con el resultado de evaluar la solución, que puede ser: \codigo{errored} si el programa no compila, \codigo{passed\_with\_warnings} si el programa es correcto (pasa las pruebas) pero no utiliza las herramientas adecuadas o \codigo{passed} si es correcto y cumple con las expectativas.}
+\end{itemize}
+
 \begin{figure}[FlujoSubmission]
   \centering
 
@@ -40,25 +47,26 @@ De los componentes mencionados en la introducción, sólo nos interesan el Athen
     \end{call}
   \end{sequencediagram}
 
-  \caption{Comunicación entre el estudiante, el Atheneum y un Runner.}
+  \caption{Comunicación entre el estudiante, el Atheneum y un \runner.}
   \label{fig:FlujoSubmission}
 \end{figure}
 
-\begin{itemize}
-  \item{El estudiante envia su solución, lo cual produce un POST HTTP hacia el Atheneum.}
-  \item{El Atheneum envia otro POST HTTP al \runner\ correspondiente, agregando las pruebas, expectativas y código adicional del ejercicio.}
-  \item{El \runner\ responde al pedido HTTP con el resultado de evaluar la solución, que puede ser: \codigo{errored} si el programa no compila, \codigo{passed\_with\_warnings} si el programa es correcto (pasa las pruebas) pero no utiliza las herramientas adecuadas o \codigo{passed} si es correcto y cumple con las expectativas.}
-\end{itemize}
+\subsubsection{Requisitos para poder implementar un \runner}
+Para poder implementar un \runner, es necesario que el lenguaje cumpla ciertas características.
 
-\subsubsection{Requisitos para poder implementar un runner}
-\borrador{
-  \begin{enumerate}
-    \item ejecutar un programa Gobstones
-    \item probar que el resultado (tablero final o valor de retorno) coincide con lo esperado
-    \item una representación del AST para poder evaluar las expectativas
-    \item una representación HTML de los tableros para poder mostrarle al estudiante
-  \end{enumerate}
-}
+\sepfootnotecontent
+  {GBB}
+  {Acrónimo para GoBstones Board. Es un archivo de texto plano con un formato particular que permite especificar tableros.}
+
+La primera de ellas: tiene que poderse ejecutar por línea de comandos, sin la intervención de un humano. Si bien esto puede sonar trivial cuando de lenguajes industriales se trata, no lo es para este tipo de herramientas didácticas. Suelen estar fuertemente acopladas con el entorno visual que proveen para programar, haciendo que no sea posible ejecutar fuera de allí (lo que imposibilita, por ejemplo, crear un \runner\ que ejecute un programa hecho en Scratch). Afortunadamente \pyGob\ sí cuenta con dicha posibilidad, pueden ejecutarse programas por la consola y visualizar el resultado en formato GBB\sepfootnote{GBB} o HTML.
+
+Lo siguiente es poder probar que la solución del estudiante sea correcta. De un programa Gobstones pueden interesarnos validar dos cosas: dado un tablero inicial conocido, el problema tiene que llegar a un tablero final esperado (si se trata de un procedimiento) o tiene que retornar un valor esperado (si se trata de una función). Este tipo de pruebas se denominan unitarias y suelen ser escritas en algún framework específico del lenguaje con el que se está trabajando: JUnit para Java, rspec para Ruby, mocha para Javascript,etcétera. En este caso tuve que desarrollarlo yo, ya que hasta el momento no existía un framework así para Gobstones.
+
+\sepfootnotecontent
+  {AST}
+  {Representación de árbol de la estructura sintáctica abstracta (simplificada) del código fuente, donde cada nodo del árbol denota una construcción que ocurre en el código fuente. La sintaxis es abstracta en el sentido que no representa cada detalle que aparezca en la sintaxis verdadera, omitiendo, por ejemplo, comentarios, espacios y saltos de línea.}
+
+Por último, se tiene que poder analizar el código del estudiante para verificar si se cumplen las expectativas. La forma más sencilla de lograrlo es recorriendo el árbol de sintaxis abstracta (AST\sepfootnote{AST}), buscando que existan ciertos patrones. Si bien \pyGob\ ya proveía una manera de obtener el AST, tuve que solicitarle al equipo de desarrollo algunos cambios que comentaré más adelante.
 
 \subsection{Gobstones}
 
