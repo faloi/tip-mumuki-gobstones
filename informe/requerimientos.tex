@@ -3,9 +3,7 @@
 \section{Requerimientos}
 En esta sección veremos cómo funcionan las herramientas involucradas y cuáles son los puntos de extensión que proveen.
 
-\subsection{Mumuki}
-
-\subsubsection{Arquitectura}
+\subsection{Arquitectura de Mumuki}
 Antes de empezar a hablar de la arquitectura, es necesario entender cómo se estructura el contenido dentro de la plataforma, ya que esto impacta en cada uno de los componentes.
 
 El ejercicio es la mínima unidad de contenido: se trata de una descripción de un problema y una forma de evaluarlo. Desde el punto de vista del estudiante, consta de un título, una descripción del problema, una serie de ayudas adicionales y un corolario (que se muestra tras resolver el problema correctamente). Desde el punto de vista técnico, se estructura de la siguiente manera:
@@ -51,7 +49,7 @@ A grandes rasgos, la comunicación se realiza de la siguiente manera:
   \label{fig:FlujoSubmission}
 \end{figure}
 
-\subsubsection{Requisitos para poder implementar un \runner}
+\subsection{Requisitos para poder implementar un \runner}
 Para poder implementar un \runner, es necesario que el lenguaje cumpla ciertas características.
 
 \sepfootnotecontent
@@ -68,9 +66,30 @@ Lo siguiente es poder probar que la solución del estudiante sea correcta. De un
 
 Por último, se tiene que poder analizar el código del estudiante para verificar si se cumplen las expectativas. La forma más sencilla de lograrlo es recorriendo el árbol de sintaxis abstracta (AST\sepfootnote{AST}), buscando que existan ciertos patrones. Si bien \pyGob\ ya proveía una manera de obtener el AST, tuve que solicitarle al equipo de desarrollo algunos cambios que comentaré más adelante.
 
-\subsection{Gobstones}
+\subsection{Cambios realizados en \pyGob}
+\sepfootnotecontent
+  {Abalorios}
+  {En paralelo al desarrollo de este trabajo y sin saber de la existencia del mismo, surgió una iniciativa similar por parte del Lic. Pablo Barenbaum, docente de la cátedra Introducción a la Programación en UNQ. Al enterarnos de que estabamos trabajando en proyectos similares, se optó por pausar el desarrollo de Abalorios.}
 
-\subsubsection{Arquitectura}
-\borrador{
-  PyGobstones consta de un compilador/intérprete y de una GUI. En este trabajo no utilizaremos la GUI, ya que está construida para una aplicación Desktop y no puede ser reutilizada dentro un sitio web.
-}
+\sepfootnotecontent
+  {PullRequestHTML}
+  {Pueden verse los cambios realizados en \url{https://github.com/gobstones/PyGobstones-Lang/pull/1}.}
+
+La visualización HTML del tablero que proveía el intérprete era poco atractiva y distaba mucho de la identidad visual de Gobstones. Basado en la representación que el Lic. Pablo Barenbaum confeccionó para la herramienta Abalorios\sepfootnote{Abalorios}, creé una nueva representación (ver Figura \ref{fig:TableroHTML}) que luego fue integrada a la versión estable de \pyGob\sepfootnote{PullRequestHTML}.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.5]{images/tablero-html-viejo.png}
+  \includegraphics[scale=0.4]{images/tablero-html-nuevo.png}
+
+  \caption{Representación HTML de un tablero. La versión de la izquierda era la existente hasta la realización del presente trabajo.}
+  \label{fig:TableroHTML}
+\end{figure}
+
+\sepfootnotecontent
+  {IssueAST}
+  {Puede verse la discusión en \url{https://github.com/gobstones/PyGobstones/issues/32}.}
+
+Con la generación del AST ocurrieron dos problemas puntuales, que fueron resueltos por el equipo desarrollador al poco tiempo de haberlos reportado\sepfootnote{IssueAST}.
+
+El primero fue que además de generarse el AST se ejecutaba el código, inhabilitando la posibilidad de correr expectativas sobre programas sintácticamente válidos que arrojaban error en tiempo de ejecución. El siguiente problema fue que no era posible generar el AST de una única función o procedimiento, lo cual obligaba a tener que correr las expectativas sobre el código del estudiante y el provisto por el docente, sin poder diferenciar fácilmente qué parte se estaba analizando.
