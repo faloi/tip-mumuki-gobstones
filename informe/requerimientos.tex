@@ -1,23 +1,54 @@
 %!TEX root = main.tex
 
 \section{Requerimientos}
+En esta sección veremos cómo funcionan las herramientas involucradas y cuáles son los puntos de extensión que proveen.
 
 \subsection{Mumuki}
 
 \subsubsection{Arquitectura}
-\borrador{
-  \begin{itemize}
-    \item \textit{plataforma:} donde el estudiante sube sus soluciones y ve el feedback
-    \item \textit{runners:} servicios web encargados de probar los programas que escribe el estudiante
-    \item diagrama de secuencia de la arquitectura:
-      \begin{itemize}
-        \item alumno envia solución
-        \item plataforma envia solución, tests, expectativas y código adicional en una request al runner
-        \item el runner compila, corre los tests, chequea las expectativas y devuelve el resultado
-        \item la plataforma renderiza los resultados
-      \end{itemize}
-  \end{itemize}
-}
+Antes de empezar a hablar de la arquitectura, es necesario entender cómo se estructura el contenido dentro de la plataforma, ya que esto impacta en cada uno de los componentes.
+
+El ejercicio es la mínima unidad de contenido: se trata de una descripción de un problema y una forma de evaluarlo. Desde el punto de vista del estudiante, consta de un título, una descripción del problema, una serie de ayudas adicionales y un corolario (que se muestra tras resolver el problema correctamente). Desde el punto de vista técnico, se estructura de la siguiente manera:
+
+\begin{itemize}
+  \caracteristica{Pruebas} evalúan que la solución resuelva el problema de forma correcta, es decir, que llegue al resultado esperado.
+
+  Por ejemplo, si tenemos una función \codigo{dobleDe(numero)} que recibe un número y devuelve su doble, una prueba posible sería que \codigo{dobleDe(2)} da como resultado \codigo{4}.
+
+  \caracteristica{Expectativas} evalúan que la solución resuelva el problema de forma adecuada, es decir, que se utilicen las herramientas correctas.
+
+  Supongamos que ahora queremos hacer la función \codigo{cuadrupleDe(numero)}, que tome un número y devuelve su cuadruple, y queremos que el estudiante la implemente en términos de \codigo{dobleDe} (ya que multiplicar por 4 es lo mismo que multiplicar 2 veces por 2). En ese caso nuestro objetivo sería \codigo{cuadrupleDe(numero) \textit{debe usar} dobleDe(numero)}.
+
+  \caracteristica{Código adicional} herramientas que el estudiante puede utilizar al escribir su solución. Pueden ser fruto de ejercicios anteriores o simplemente partes del problema que el docente quiera facilitar.
+
+  Retomando el ejemplo anterior, la función \codigo{dobleDe(numero)} podría ser provista por el docente, ya que se supone que el estudiante pudo razonarla en el ejercicio anterior y sería tedioso que tuviera que volver a escribirla.
+\end{itemize}
+
+De los componentes mencionados en la introducción, sólo nos interesan el Atheneum y los \runner s ya que como vemos en la Figura \ref{fig:FlujoSubmission} son los que intervienen en el proceso que va desde el envío de la solución del estudiante hasta la obtención del resultado.
+
+\begin{figure}[FlujoSubmission]
+  \centering
+
+  \begin{sequencediagram}
+    \newthread{estudiante}{Estudiante}{}
+    \newinst{atheneum}{Atheneum}{}
+    \newinst{runner}{Runner}{}
+
+    \begin{call}{estudiante}{Validar(solucion)}{atheneum}{resultado}
+      \begin{call}{atheneum}{Validar(solucion, pruebas, expectativas, codigo\_adicional)}{runner}{resultado}
+      \end{call}
+    \end{call}
+  \end{sequencediagram}
+
+  \caption{Comunicación entre el estudiante, el Atheneum y un Runner.}
+  \label{fig:FlujoSubmission}
+\end{figure}
+
+\begin{itemize}
+  \item{El estudiante envia su solución, lo cual produce un POST HTTP hacia el Atheneum.}
+  \item{El Atheneum envia otro POST HTTP al \runner\ correspondiente, agregando las pruebas, expectativas y código adicional del ejercicio.}
+  \item{El \runner\ responde al pedido HTTP con el resultado de evaluar la solución, que puede ser: \codigo{errored} si el programa no compila, \codigo{passed\_with\_warnings} si el programa es correcto (pasa las pruebas) pero no utiliza las herramientas adecuadas o \codigo{passed} si es correcto y cumple con las expectativas.}
+\end{itemize}
 
 \subsubsection{Requisitos para poder implementar un runner}
 \borrador{
