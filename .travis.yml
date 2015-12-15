@@ -6,15 +6,16 @@ install:
 - PATH=$HOME/texlive/bin/x86_64-linux:$PATH
 - tlmgr update --self
 - tlmgr install babel-spanish
+- export GIT_TAG=v`date +%Y-%m-%d-%H-%M-%S`
 script:
 - mkdir _build
 - cd informe
 - latexmk -pdf -output-directory=../_build main.tex
 - cd ..
+- mv _build/main.pdf _build/TIP-Aloi-MumukiGobstones-$GIT_TAG.pdf
 before_deploy:
 - git config --global user.email "builds@travis-ci.com"
 - git config --global user.name "Travis CI"
-- export GIT_TAG=v`date +%Y-%m-%d-%H-%M-%S`
 - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
 - git push -q https://$GIT_CREDENTIALS@github.com/$TRAVIS_REPO_SLUG --tags
 deploy:
@@ -22,7 +23,7 @@ deploy:
   api_key:
     secure: aUxgMwYQjDStMCXgrb0KE7tMukCFwAoLBoTkYYRTJMlKparN/coM8MC73DMEMSgsQRnLaeG1VG8Jrd46CKGjJhaG7dpNVjHFAVgjcVF4n5iQPoyoAAkn4swVM/xsGrixKFtQHqbkG4xPpPeQ9Q/L83Ru5v/TpEGfrJyrhxQRb1AR0hjID4gqpqtmseU6n7Yayt0iU/R1r54O9p5Q8hDSJEjtG0IBbP5twzRfTXke5Man6Vuvtd5QptzwwOb5u74IguU2FuNultRqjmrtENmNddVo/29oJ07fldRGcdq9QvSKT0fpuYPyuOApPJWSsJLuc5zJg2s1ah5R+fPx1Z3w/0Q0c/7c59PqOpt6MOrFLXLpqZB1KXK64DJlcJykbiFc2+Wf6yrCxun9PNdk8ruofXdDm44s0gdJHSu0cPWoLcIQ5UjcoewRaFlscU8Fv6yFtNiIUNBQ1KFxy4jj3Jf0Z5L/Wg0GlYteVz2RJBC7cVM3+3eXxB0tkpE7MPXLfBdb618dr5Fen1X68nxbyE8LAGdhXzM5V9gwyrCzbLjftjGTHQC1FqtM5no3aH/ye9547QJ/MbXQSRoEBS70s+g8J+h1x87Cet3iJEQSIs0eRSsL3Wk0vj5d9sgFOSKP0/tPy9x6Rm3PejfgI4bNWAPeZJi/T2hQUBkbeyBkxrRCnSI=
   skip_cleanup: true
-  file: _build/main.pdf
+  file: _build/TIP-Aloi-MumukiGobstones-$GIT_TAG.pdf
   on:
     repo: faloi/tip-mumuki-gobstones
     tags: false
