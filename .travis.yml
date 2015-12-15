@@ -14,7 +14,7 @@ script:
 before_deploy:
 - git config --global user.email "builds@travis-ci.com"
 - git config --global user.name "Travis CI"
-- export GIT_TAG=`date +%Y-%m-%d`
+- export GIT_TAG=v`date +%Y-%m-%d-%H-%M-%S`
 - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
 - git push -q https://$GIT_CREDENTIALS@github.com/$TRAVIS_REPO_SLUG --tags
 deploy:
@@ -29,3 +29,6 @@ deploy:
 env:
   global:
     secure: Fu5MWEEYmofd27+FSVFVAfnWI0V9RlkBbRGEF6s9bkozF9qZQ+pHHFYOhYULX7lz2A8paY9WMWEJdLSSNErR+xxwNPw+86FtQgXza0KAzbysidW2It03apc8bTc+ekypX/kzk1H+R1YdrFoLc2kztx3C9/bZOHeR73PD534jLVdt5GvtStwJxOFp9Ns87forp2OU5ZszOLfBDf8AXtXIrFO/+/VG/wP0n8s8Qo3UzXqQExWfkVBdxNBMfz/oeqRcCRKXbKgJPzyZLGhJ8nt72iXqZvLBiiQbfqkWajWrSJqhsJOrPHm0fGni1xqXT1BtlUgyn1hTRFIhdQTXkGMi/TnsKIDJ+vBmyr0T77Y6u1GgwCZN1J1jD4SM/PEPMRqZ1jskC1Ci4by++B/dAONR9IaSu63eJQtDMP4dJJYaXM11LGfWbDejUXfC70IhGOBumb5CVp332iVowpxl8wxa+AVYDeF5p6gULLrsQWs5LpqmB/0pHiXcEtE6rAUPqUj7Cr+6b7NT38iVStRkMy2ak/pHiuytigbWiOXQ4592dpwL+0nmh5o8+qbQTWZ03D6kdQEmK8galBM6cVtGfDsVhQdf1CRyH2nBzh2cXw8xEvQKZQSGdvaIHOWY8R8rIOjEW8NWmX+tg1Fvot1AQc6Oq6AUqFVWnE+P19sjYy+hwOQ=
+branches:
+  except:
+    - /^v[0-9]/
