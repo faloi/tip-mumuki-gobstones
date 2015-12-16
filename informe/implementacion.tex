@@ -2,20 +2,32 @@
 
 \section{Implementación}
 
-\subsection{Cómo atacar los requisitos}
-\borrador{
-  \begin{enumerate}
-    \item PyGobstones provee una forma para ejecutar programas por consola
-    \item no había nada
-    \item PyGobstones provee una forma para obtener el AST de un programa por consola, pero tenía algunos problemas:
-      \begin{itemize}
-        \item no había forma de pedirle que no ejecutara el programa, por lo tanto no se podían parsear programas que producieran \textit{BOOM}
-        \item todas las funciones y procedimientos tenían que estar definidos, por lo tanto no se podían parsear soluciones que dependieran de código adicional (sobre el que no interesa correr ningún tipo de validación porque lo provee el docente)
-        \item la representación del AST no es standard (aún no resuelto)
-      \end{itemize}
-    \item había una representación pero le faltaba trabajo, no se comprendía por completo y no respetaba la identidad visual de Gobstones
-  \end{enumerate}
-}
+\subsection{Tecnología elegida}
+Al pensar cuál podría ser la tecnología más adecuada para desarrollar el \runner, lo primero que surge es evaluar con qué tecnologías fueron construidos los \runner s existentes y cuánto de ello podría ser reutilizado.
+
+\sepfootnotecontent
+  {Gema}
+  {Nombre con el que se conoce a las bibliotecas de código Ruby. Tienen la particularidad de ser muy fáciles de publicar y usar, favoreciendo así la reutilización de componentes.}
+
+En el momento en que empecé a planificar la integración, Mumuki soportaba solamente 3 lenguajes: Haskell, con un \runner\ escrito en Haskell, y Prolog y Ruby, ambos con \runner s escritos en Ruby. Estos dos últimos compartían parte de su código mediante la utilización de la gema\sepfootnote{Gema} \mumukit, encargada de resolver las cuestiones de comunicación con el Atheneum, dejando como tarea para el programador la implementación de algunos pocos métodos que se encargan de lo necesario para ejecutar los programas.
+
+Ante este escenario, resulta evidente que la elección de Ruby como lenguaje de soporte para el \runner\ de Gobstones era la más acertada.
+
+\subsection{Stones Spec}
+Una vez elegida la tecnología, me aboqué a la primera tarea: crear un framework para poder correr tests unitarios sobre programas, procedimientos o funciones Gobstones. En cualquier lenguaje de propósito general, estos frameworks están codificados utilizando el mismo lenguaje sobre el cual se van a ejecutar las pruebas. Como Gobstones no es un lenguaje de propósito general, esto no es posible y por lo tanto es necesario valerse de alguna otra tecnología, Ruby en este caso.
+
+\borrador{Contar cuáles son los componentes de un test (subject, check head position, examples, valores de retorno, parámetros). Mostrar un test de ejemplo.}
+
+\borrador{Contar brevemente cómo se implementó: se crean archivos temporales con el programa y los tableros iniciales, se ejecuta, se parsea el resultado de la consola o del archivo GBB de salida.}
+
+\subsection{Trabajando con \mumukit}
+En particular, \mumukit\ exige que se implementen al menos dos métodos:
+\begin{itemize}
+  \item{\codigo{compile}: que recibe la solución del estudiante, el código extra provisto por el docente y el código de las pruebas, y debe encargarse de unirlos;}
+  \item{\codigo{run\_test\_command}: que recibe el archivo generado por el método anterior y debe encargarse de ejecutar las pruebas y devolver el resultado.}
+\end{itemize}
+
+En cualquier otro \runner, programar el \codigo{compile} es muy sencillo: como todos los bloques de código están expresados en el lenguaje que se intenta probar, basta con yuxtaponerlos. Como vimos anteriormente, un test unitario en Gobstones no es un archivo de código sino una representación YAML de una serie de configuraciones, y eso es lo que se genera en este caso.
 
 \subsection{Extensiones a Mumuki}
 \borrador{
@@ -24,16 +36,6 @@
     \item soportar HTML como output de un runner
   \end{itemize}
 }
-
-\subsection{Tecnología elegida}
-\borrador{
-  \begin{itemize}
-    \item la interacción con PyGobstones se realizaría por consola, por lo cual la elección del lenguaje no influía en nada
-    \item ya existía mumukit, una biblioteca para Ruby (se la llama gema) que resolvía todo lo que tenía que ver con el manejo HTTP
-  \end{itemize}
-}
-
-\subsection{Stones Spec}
 
 \subsection{Mumuki Gobstones Server}
 \subsubsection{Integración con Stones Spec}
