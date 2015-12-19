@@ -4,13 +4,15 @@ before_install:
   | tar -JxC $HOME/texlive
 install:
 - PATH=$HOME/texlive/bin/x86_64-linux:$PATH
+- pip install Pygments
 - tlmgr update --self
 - tlmgr install babel-spanish
+- tlmgr install minted
 - export GIT_TAG=v`date +%Y-%m-%d-%H-%M-%S`
 script:
 - mkdir _build
 - cd informe
-- latexmk -pdf -output-directory=../_build main.tex
+- latexmk -pdf -shell-escape -output-directory=../_build main.tex
 - cd ..
 - mv _build/main.pdf _build/TIP-Aloi-MumukiGobstones-$GIT_TAG.pdf
 before_deploy:

@@ -14,9 +14,31 @@ En el momento en que empecé a planificar la integración, Mumuki soportaba sola
 Ante este escenario, resulta evidente que la elección de Ruby como lenguaje de soporte para el \runner\ de Gobstones era la más acertada.
 
 \subsection{Stones Spec}
-Una vez elegida la tecnología, me aboqué a la primera tarea: crear un framework para poder correr tests unitarios sobre programas, procedimientos o funciones Gobstones. En cualquier lenguaje de propósito general, estos frameworks están codificados utilizando el mismo lenguaje sobre el cual se van a ejecutar las pruebas. Como Gobstones no es un lenguaje de propósito general, esto no es posible y por lo tanto es necesario valerse de alguna otra tecnología, Ruby en este caso.
+Una vez elegida la tecnología, me aboqué a la primera tarea: crear un framework para poder correr tests unitarios sobre programas, procedimientos o funciones Gobstones. En cualquier lenguaje de propósito general, estos frameworks están codificados utilizando el mismo lenguaje sobre el cual se van a ejecutar las pruebas pero como Gobstones no es un lenguaje de propósito general, esto no era una opción. Por simplicidad y para no introducir otro nuevo lenguaje, elegí utilizar también Ruby para esta tarea.
+
+\begin{listing}
+  \centering
+
+  \begin{minted}{yaml}
+  check_head_position: true
+  examples:
+   - initial_board: |
+       GBB/1.0
+       size 2 2
+       head 0 0
+     final_board: |
+       GBB/1.0
+       size 2 2
+       head 1 1
+  \end{minted}
+
+  \caption{Ejemplo de un test sencillo, que chequea únicamene la posición del cabezal.}
+  \label{lst:CabezalSpec}
+\end{listing}
 
 \borrador{Contar cuáles son los componentes de un test (subject, check head position, examples, valores de retorno, parámetros). Mostrar un test de ejemplo.}
+
+Un ejemplo de esto puede verse en la figura \ref{lst:CabezalSpec}.
 
 \borrador{Contar brevemente cómo se implementó: se crean archivos temporales con el programa y los tableros iniciales, se ejecuta, se parsea el resultado de la consola o del archivo GBB de salida.}
 
