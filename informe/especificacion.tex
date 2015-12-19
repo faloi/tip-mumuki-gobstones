@@ -58,7 +58,7 @@ Para poder implementar un \runner, es necesario que el lenguaje cumpla ciertas c
 
 La primera de ellas: tiene que poderse ejecutar por línea de comandos, sin la intervención de un humano. Si bien esto puede sonar trivial cuando de lenguajes industriales se trata, no lo es para este tipo de herramientas didácticas. Suelen estar fuertemente acopladas con el entorno visual que proveen para programar, haciendo que no sea posible ejecutar fuera de allí (lo que imposibilita, por ejemplo, crear un \runner\ que ejecute un programa hecho en Scratch). Afortunadamente \pyGob\ sí cuenta con dicha posibilidad, pueden ejecutarse programas por la consola y visualizar el resultado en formato GBB\sepfootnote{GBB} o HTML.
 
-Lo siguiente es poder probar que la solución del estudiante sea correcta. De un programa Gobstones pueden interesarnos validar dos cosas: dado un tablero inicial conocido, el problema tiene que llegar a un tablero final esperado (si se trata de un procedimiento) o tiene que retornar un valor esperado (si se trata de una función). Este tipo de pruebas se denominan unitarias y suelen ser escritas en algún framework específico del lenguaje con el que se está trabajando: JUnit para Java, rspec para Ruby, mocha para Javascript,etcétera. En este caso tuve que desarrollarlo yo, ya que hasta el momento no existía un framework así para Gobstones.
+Lo siguiente es poder probar que la solución del estudiante sea correcta. De un programa Gobstones pueden interesarnos validar dos cosas: dado un tablero inicial conocido, el problema tiene que llegar a un tablero final esperado (si se trata de un programa o un procedimiento) o tiene que retornar un valor esperado (si se trata de una función). Este tipo de pruebas se denominan unitarias y suelen ser escritas en algún framework específico del lenguaje con el que se está trabajando: JUnit para Java, rspec para Ruby, mocha para Javascript,etcétera. En este caso tuve que desarrollarlo yo, ya que hasta el momento no existía un framework así para Gobstones.
 
 \sepfootnotecontent
   {AST}
@@ -82,7 +82,7 @@ La visualización HTML del tablero que proveía el intérprete era poco atractiv
   \includegraphics[scale=0.5]{images/tablero-html-viejo.png}
   \includegraphics[scale=0.4]{images/tablero-html-nuevo.png}
 
-  \caption{Representación HTML de un tablero. La versión de la izquierda era la existente hasta la realización del presente trabajo.}
+  \caption{Representación HTML de un tablero Gobstones. A la izquierda, la versión implementada en \pyGob\ hasta la realización del presente trabajo; a la derecha, la nueva versión.}
   \label{fig:TableroHTML}
 \end{figure}
 
