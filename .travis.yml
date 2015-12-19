@@ -13,9 +13,9 @@ install:
 script:
 - mkdir _build
 - cd informe
-- latexmk -pdf -shell-escape -output-directory=../_build main.tex
+- latexmk -pdf -shell-escape
+- mv main.pdf ../_build/TIP-Aloi-MumukiGobstones-$GIT_TAG.pdf
 - cd ..
-- mv _build/main.pdf _build/TIP-Aloi-MumukiGobstones-$GIT_TAG.pdf
 before_deploy:
 - git config --global user.email "builds@travis-ci.com"
 - git config --global user.name "Travis CI"
