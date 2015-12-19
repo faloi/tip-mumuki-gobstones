@@ -14,17 +14,17 @@ En el momento en que empecé a planificar la integración, Mumuki soportaba sola
 Ante este escenario, resulta evidente que la elección de Ruby como lenguaje de soporte para el \runner\ de Gobstones era la más acertada.
 
 \subsection{Stones Spec}
-Una vez elegida la tecnología, me aboqué a la primera tarea: crear un framework para poder correr tests unitarios sobre programas, procedimientos o funciones Gobstones. En cualquier lenguaje de propósito general, estos frameworks están codificados utilizando el mismo lenguaje sobre el cual se van a ejecutar las pruebas pero como Gobstones no es un lenguaje de propósito general, esto no era una opción. Por simplicidad y para no introducir otro nuevo lenguaje, elegí utilizar también Ruby para esta tarea.
+Una vez elegida la tecnología, me aboqué a la primera tarea: crear un framework para poder correr tests unitarios sobre programas, procedimientos o funciones Gobstones. En cualquier lenguaje de propósito general, estos frameworks están codificados utilizando el mismo lenguaje sobre el cual se van a ejecutar las pruebas pero como Gobstones no es un lenguaje de propósito general, esto no era una opción. Para no introducir otro nuevo lenguaje, elegí utilizar también Ruby para esta tarea.
 
-Tras analizar algunos ejercicios de las guías de Introducción a la Programación, diseñé un modelo de prueba que consta de los siguientes atributos:
+Tras analizar algunos ejercicios de las guías de Introducción a la Programación, diseñé un modelo de prueba que consta fundamentalmente de dos cosas: un \emph{sujeto} y una colección de \emph{ejemplos}. El sujeto es el nombre del procedimiento o función que se desea probar; si se lo omite, las pruebas se realizan sobre el programa completo. Los ejemplos son uno o más escenarios sobre los cuales se desea probar al sujeto, cómo están compuestos esos ejemplos dependerá del tipo de sujeto.
 
-\begin{itemize}
-  \caracteristica{Subject} nombre del procedimiento o función que se desea probar. Si se lo omite, las pruebas se realizan sobre el programa completo.
-  \caracteristica{Check head position} indica si las pruebas deben verificar la posición del cabezal.
-  \caracteristica{Examples} lista de ejemplos que serán probados, la estructura dependerá del sujeto que se esté probando.
+En el caso de un \emph{programa}, cada ejemplo constará de una dupla \codigo{(tablero inicial, tablero final)} - ver código \ref{lst:ProgramSpec}; para un \emph{procedimiento}, deberán especificarse también los argumentos con los cuales será ejecutado, resultando en una terna \codigo{(parámetros, tablero inicial, tablero final)} - ver código \ref{lst:ProcedureSpec}; y para una \emph{función} deberá especificarse el resultado esperado en vez del tablero final, resultando en una terna \codigo{(parámetros, tablero inicial, resultado)} - ver código \ref{lst:FunctionSpec}.
 
-  En el caso de un \emph{programa}, cada ejemplo constará de una dupla \codigo{(tablero inicial, tablero final)} (ver código \ref{lst:ProgramSpec}); para un \emph{procedimiento} con parámetros, deberán especificarse también los parámetros con los cuales será ejecutado, resultando en una terna \codigo{(parámetros, tablero inicial, tablero final)} (ver código \ref{lst:ProcedureSpec}); y para una \emph{función} deberá especificarse el resultado esperado en vez del tablero final, resultando en una terna \codigo{(parámetros, tablero inicial, resultado)} (ver código \ref{lst:FunctionSpec}).
-\end{itemize}
+\sepfootnotecontent
+  {YAML}
+  {Acrónimo de \emph{YAML Ain't Markup Language}, YAML es un formato ``human friendly'' de serialización de datos, estándar para muchos lenguajes de programación. En particular, es el más utilizado dentro de la comunidad Ruby, soportado nativamente por el lenguaje.}
+
+Para representar estas pruebas utilicé el formato YAML\sepfootnote{YAML}, principalmente por su facilidad de escritura y su fácil integración con Ruby.
 
 \begin{listing}
   \centering
@@ -43,7 +43,7 @@ Tras analizar algunos ejercicios de las guías de Introducción a la Programaci�
        head 1 1
   \end{minted}
 
-  \caption{Ejemplo de un test de \emph{programa}, que chequea que haya una bolita roja en la celda \codigo{(1, 1)} y que el cabezal se encuentre allí.}
+  \caption{Representación YAML de un test de \emph{programa}, que chequea que haya una bolita roja en la celda \codigo{(1, 1)} y que el cabezal se encuentre allí.}
   \label{lst:ProgramSpec}
 \end{listing}
 
@@ -67,7 +67,7 @@ Tras analizar algunos ejercicios de las guías de Introducción a la Programaci�
        head 0 0
   \end{minted}
 
-  \caption{Ejemplo de un test de \emph{procedimiento}, que chequea que \codigo{PonerN} pone 2 bolitas azules cuando es llamado con los argumentos \codigo{(2, Azul)}.}
+  \caption{Representación YAML de un test de \emph{procedimiento}, que chequea que \codigo{PonerN} pone 2 bolitas azules cuando es llamado con los argumentos \codigo{(2, Azul)}.}
   \label{lst:ProcedureSpec}
 \end{listing}
 
@@ -85,7 +85,7 @@ Tras analizar algunos ejercicios de las guías de Introducción a la Programaci�
      return: 10
   \end{minted}
 
-  \caption{Ejemplo de un test de \emph{función}, que chequea que \codigo{nroBolitasTotal} devuelve 10 en una celda con 10 bolitas.}
+  \caption{Representación YAML de un test de \emph{función}, que chequea que \codigo{nroBolitasTotal} devuelve 10 en una celda con 1 bolita roja, 2 azules, 2 negras y 5 verdes.}
   \label{lst:FunctionSpec}
 \end{listing}
 
