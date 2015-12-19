@@ -1,4 +1,5 @@
 sudo: false
+language: python
 before_install:
 - mkdir -p $HOME/texlive && curl -L https://github.com/urdh/texlive-blob/releases/download/20150712/texlive.tar.xz
   | tar -JxC $HOME/texlive
