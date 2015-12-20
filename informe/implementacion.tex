@@ -28,16 +28,6 @@ Para representar estas pruebas utilicé el formato YAML\sepfootnote{YAML}, princ
 
 \borrador{Contar brevemente cómo se implementó: se crean archivos temporales con el programa y los tableros iniciales, se ejecuta, se parsea el resultado de la consola o del archivo GBB de salida.}
 
-\subsection{Chequeo de expectativas}
-
-\subsection{Extensiones a Mumuki}
-\borrador{
-  \begin{itemize}
-    \item poder mostrar el resultado de una ejecución, para no perder el componente visual de Gobstones. Hasta el momento no existía ya que en otros lenguajes no interesaba mostrar el resultado
-    \item soportar HTML como output de un runner
-  \end{itemize}
-}
-
 \subsection{Mumuki Gobstones \runner}
 Como se comentó anteriormente, la implementación está guiada por \mumukit\. Para ello, la gema exige que se implementen al menos dos métodos:
 \begin{itemize}
@@ -50,3 +40,11 @@ En cualquier otro \runner, programar el \codigo{compile} es muy sencillo: como t
 Al haber delegado la ejecución de las pruebas, sólo resta implementar el chequeo de expectativas y ejecutar todo en el \codigo{run\_test\_command}.
 
 \subsubsection{Chequeo de expectativas}
+
+\subsection{Extensiones a Mumuki}
+\borrador{
+  \begin{itemize}
+    \item poder mostrar el resultado de una ejecución, para no perder el componente visual de Gobstones. Hasta el momento no existía ya que en otros lenguajes no interesaba mostrar el resultado
+    \item soportar HTML como output de un runner
+  \end{itemize}
+}
