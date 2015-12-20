@@ -2,6 +2,7 @@
 
 *.pdf
 *~
+_minted-main/
 
 #####=== TeX ===#####
 

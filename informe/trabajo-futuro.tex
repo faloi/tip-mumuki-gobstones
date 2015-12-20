@@ -1,11 +1,23 @@
 %!TEX root = main.tex
 
 \section{Trabajo futuro}
-\borrador{
-  \begin{itemize}
-    \item integración con Gobstones Web
-    \item Abalorios - implementar cambios sugeridos por el Lic. Barenbaum
-    \item más expectativas
-    \item soporte completo para probar programas XGobstones
-  \end{itemize}
-}
+
+\subsection{Coloreo de sintaxis para el editor web}
+Un denominador común de las pruebas realizadas con mis estudiantes fue la queja por la falta de coloreo en el editor de Mumuki. Acostumbrados a la interfaz de \pyGob, muchos de ellos asociaron la falta de color con los errores de sintaxis, sintiéndose desorientados al encontrarse con un editor que no los asistía.
+
+\subsection{Integración con Gobstones Web}
+Está siendo desarrollada una nueva versión de Gobstones basada en Javascript, que estará disponible para ser utilizada desde la web y reemplazará a \pyGob. Cuando eso suceda, parte de la integración que se realizó en el presente trabajo quedará obsoleta y será conveniente volver a desarrollarla.
+
+A pesar de esto, tener una versión web de Gobstones presenta algunas ventajas: la ejecución y la generación del AST podrían realizarse directamente en el servidor de Gobstones, componentes como la visualización HTML del tablero o el editor podrían ser reutilizados por ambos proyectos, etc. Podría también desarrollarse una integración mucho más fuerte, proveyendo al estudiante de ejercicios directamente sobre el IDE que utiliza día a día, sin necesidad de que este tenga que resolver ejercicios en dos lugares diferentes.
+
+\subsection{Motor de expectativas}
+Dentro de las tareas planificadas dentro del proyecto Mumuki está la de crear un motor de expectativas que permita reutilizar gran parte del código que hoy está replicado en cada uno de los \runner s, ya que los patrones que se quieren chequear suelen ser similares entre lenguajes con características similares (por ejemplo, las inspecciones \codigo{HasBinding} y \codigo{HasUsage} resultan útiles para cualquier lenguaje, y las implementaciones son prácticamente iguales).
+
+Una vez que dicha herramienta exista, habrá que convertir el AST de Gobstones al formato que esta espere y traducir las expectativas existentes a Haskell, tecnología en la cual será construido el motor. Esto permitirá aumentar notablemente la cantidad de expectativas soportadas por el \runner\ de Gobstones, ya que podrán utilizarse todas las que ya existan para otros lenguajes.
+
+\subsection{Soporte completo para XGobstones}
+Para que la herramienta pueda ser utilizada durante todo un curso de Introducción a la Programación, es necesario incorporar soporte para XGobstones, extensión que agrega listas y registros al lenguaje.
+
+Actualmente existe una prueba de concepto que realicé para dar soporte a una guía de recorridos sobre listas que fue utilizada en el curso dictado el segundo semestre de 2015 en el CIU General Belgrano. Dicha prueba permitió especificar pruebas sobre funciones de manipulación de listas que no hacían uso del tablero, pudiendo verificar que devolvían la lista esperada.
+
+Para seguir con esta línea, habría que implementar más tipos de aserciones sobre listas, como por ejemplo saber su longitud o aceptar cualquier permutación como resultado válido, e incorporar aserciones que permitan validar registros.

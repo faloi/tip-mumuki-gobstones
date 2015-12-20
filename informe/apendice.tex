@@ -1,0 +1,98 @@
+%!TEX root = main.tex
+
+\renewcommand{\appendixtocname}{Apéndice}
+\renewcommand{\appendixpagename}{Apéndice}
+
+\newcommand{\separador}{\rule{\textwidth}{0.5pt}}
+
+\begin{appendices}
+
+\section*{Ejemplos de pruebas en Stones Spec}
+\label{app:Specs}
+
+Representación YAML de un test de \emph{programa}, que chequea que haya una bolita roja en la celda \codigo{(1, 1)} y que el cabezal se encuentre allí.
+
+\begin{minted}{yaml}
+check_head_position: true
+examples:
+ - initial_board: |
+     GBB/1.0
+     size 2 2
+     head 0 0
+   final_board: |
+     GBB/1.0
+     cell 1 1 Rojo 1
+     size 2 2
+     head 1 1
+\end{minted}
+
+\separador
+
+Representación YAML de un test de \emph{procedimiento}, que chequea que \codigo{PonerN} pone 2 bolitas azules cuando es llamado con los argumentos \codigo{(2, Azul)}.
+
+\begin{minted}{yaml}
+subject: PonerN
+examples:
+ - arguments:
+    - 2
+    - Azul
+   initial_board: |
+     GBB/1.0
+     size 2 2
+     head 0 0
+   final_board: |
+     GBB/1.0
+     size 2 2
+     cell 0 0 Azul 2
+     head 0 0
+\end{minted}
+
+\separador
+
+Representación YAML de un test de \emph{función}, que chequea que \codigo{nroBolitasTotal} devuelve 10 en una celda con 1 bolita roja, 2 azules, 2 negras y 5 verdes.
+
+\begin{minted}{yaml}
+subject: nroBolitasTotal
+examples:
+ - initial_board: |
+     GBB/1.0
+     size 2 2
+     cell 0 0 Rojo 1 Azul 2 Negro 2 Verde 5
+     head 0 0
+   return: 10
+\end{minted}
+
+\section*{Representación del AST de un programa Gobstones}
+\label{app:ASTGobstones}
+
+A continuación se observa un procedimiento Gobstones y la representación de su AST que brinda \pyGob.
+
+\begin{minted}{puppet}
+procedure MoverOeste3()
+{
+  repeat(8) { Mover(Oeste) }
+}
+\end{minted}
+
+\begin{minted}{python}
+AST(program
+    AST()
+    AST(
+        AST(procedure
+            MoverOeste3
+            AST()
+            AST(
+                AST(repeat
+                    AST(literal
+                        8)
+                    AST(block
+                        AST(
+                            AST(procCall
+                                Mover
+                                AST(
+                                    AST(literal
+                                        Oeste)))))))
+            None)))
+\end{minted}
+
+\end{appendices}

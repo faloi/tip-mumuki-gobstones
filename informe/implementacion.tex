@@ -2,39 +2,56 @@
 
 \section{Implementación}
 
-\subsection{Cómo atacar los requisitos}
-\borrador{
-  \begin{enumerate}
-    \item PyGobstones provee una forma para ejecutar programas por consola
-    \item no había nada
-    \item PyGobstones provee una forma para obtener el AST de un programa por consola, pero tenía algunos problemas:
-      \begin{itemize}
-        \item no había forma de pedirle que no ejecutara el programa, por lo tanto no se podían parsear programas que producieran \textit{BOOM}
-        \item todas las funciones y procedimientos tenían que estar definidos, por lo tanto no se podían parsear soluciones que dependieran de código adicional (sobre el que no interesa correr ningún tipo de validación porque lo provee el docente)
-        \item la representación del AST no es standard (aún no resuelto)
-      \end{itemize}
-    \item había una representación pero le faltaba trabajo, no se comprendía por completo y no respetaba la identidad visual de Gobstones
-  \end{enumerate}
-}
-
-\subsection{Extensiones a Mumuki}
-\borrador{
-  \begin{itemize}
-    \item poder mostrar el resultado de una ejecución, para no perder el componente visual de Gobstones. Hasta el momento no existía ya que en otros lenguajes no interesaba mostrar el resultado
-    \item soportar HTML como output de un runner
-  \end{itemize}
-}
-
 \subsection{Tecnología elegida}
-\borrador{
-  \begin{itemize}
-    \item la interacción con PyGobstones se realizaría por consola, por lo cual la elección del lenguaje no influía en nada
-    \item ya existía mumukit, una biblioteca para Ruby (se la llama gema) que resolvía todo lo que tenía que ver con el manejo HTTP
-  \end{itemize}
-}
+Al pensar cuál podría ser la tecnología más adecuada para desarrollar el \runner, lo primero que surge es evaluar con qué tecnologías fueron construidos los \runner s existentes y cuánto de ello podría ser reutilizado.
+
+\sepfootnotecontent
+  {Gema}
+  {Nombre con el que se conoce a las bibliotecas de código Ruby. Tienen la particularidad de ser muy fáciles de publicar y usar, favoreciendo así la reutilización de componentes.}
+
+En el momento en que empecé a planificar la integración, Mumuki soportaba solamente 3 lenguajes: Haskell, con un \runner\ escrito en Haskell, y Prolog y Ruby, ambos con \runner s escritos en Ruby. Estos dos últimos compartían parte de su código mediante la utilización de la gema\sepfootnote{Gema} \mumukit, encargada de resolver las cuestiones de comunicación con el Atheneum, dejando como tarea para el programador la implementación de algunos pocos métodos que se encargan de lo necesario para ejecutar los programas.
+
+Ante este escenario, resulta evidente que la elección de Ruby como lenguaje de soporte para el \runner\ de Gobstones era la más acertada.
 
 \subsection{Stones Spec}
+Una vez elegida la tecnología, me aboqué a la primera tarea: crear un framework para poder correr tests unitarios sobre programas, procedimientos o funciones Gobstones. En cualquier lenguaje de propósito general, estos frameworks están codificados utilizando el mismo lenguaje sobre el cual se van a ejecutar las pruebas pero como Gobstones no es un lenguaje de propósito general, esto no era una opción. Para no introducir otro nuevo lenguaje, elegí utilizar también Ruby para esta tarea.
 
-\subsection{Mumuki Gobstones Server}
-\subsubsection{Integración con Stones Spec}
+Tras analizar algunos ejercicios de las guías de Introducción a la Programación, diseñé un modelo de prueba que consta fundamentalmente de dos cosas: un \emph{sujeto} y una colección de \emph{ejemplos}. El sujeto es el nombre del procedimiento o función que se desea probar; si se lo omite, las pruebas se realizan sobre el programa completo. Los ejemplos son uno o más escenarios sobre los cuales se desea probar al sujeto, cómo están compuestos esos ejemplos dependerá del tipo de sujeto.
+
+En el caso de un \emph{programa}, cada ejemplo constará de una dupla \codigo{(tablero inicial, tablero final)}; para un \emph{procedimiento}, deberán especificarse también los argumentos con los cuales será ejecutado, resultando en una terna \codigo{(parámetros, tablero inicial, tablero final)}; y para una \emph{función} deberá especificarse el resultado esperado en vez del tablero final, resultando en una terna \codigo{(parámetros, tablero inicial, resultado)}.
+
+\sepfootnotecontent
+  {YAML}
+  {Acrónimo de \emph{YAML Ain't Markup Language}, YAML es un formato ``human friendly'' de serialización de datos, estándar para muchos lenguajes de programación. En particular, es el más utilizado dentro de la comunidad Ruby, soportado nativamente por el lenguaje.}
+
+Para representar estas pruebas utilicé el formato YAML\sepfootnote{YAML}, principalmente por su facilidad de escritura y su fácil integración con Ruby. Pueden verse algunos ejemplos en el apéndice \ref{app:Specs}.
+
+Gran parte del trabajo se delega en \pyGob, siendo este el encargado de ejecutar los programas, retornando o bien el tablero final o bien el error que haya ocurrido. El rol de Stones Spec es entonces estructurar estos diferentes tipos de salida de manera que el formato sea siempre el mismo y realizar la comparación entre tableros, validando así si el tablero final obtenido coincide con el que se esperaba.
+
+\subsection{Mumuki Gobstones \runner}
+Como se comentó anteriormente, la implementación está guiada por \mumukit\. Para ello, la gema necesia que se implementen tres métodos:
+\begin{itemize}
+  \item{\codigo{compile}: que recibe la solución del estudiante, el código extra provisto por el docente y el código de las pruebas, y debe encargarse de unirlos;}
+  \item{\codigo{run\_test\_command}: que recibe el archivo generado por el método anterior y debe encargarse de ejecutar las pruebas y devolver el resultado.}
+  \item{\codigo{run\_expectations}: que recibe la solución del estudiante y la colección de expectativas a evaluar, y debe encargarse de informar cuáles se cumplieron y cuáles no.}
+\end{itemize}
+
+En cualquier otro \runner, programar el \codigo{compile} es muy sencillo: como todos los bloques de código están expresados en el lenguaje que se intenta probar, basta con yuxtaponerlos. Como vimos anteriormente, un test unitario en Gobstones no es un archivo de código sino una representación YAML de una serie de configuraciones, y eso es lo que se debe generar en este caso. Al YAML que llega con las pruebas se le agrega entonces un nuevo atributo \codigo{source} con el código extra y la solución del estudiante concatenadas.
+
+Al haber delegado la ejecución de las pruebas, el \codigo{run\_test\_command} resulta trivial: basta con enviar la estructura creada a Stones Spec para que ejecute las pruebas y nos informe los resultados. Hecho esto, unicamente resta resolver el chequeo de expectativas.
+
 \subsubsection{Chequeo de expectativas}
+Como ya fue explicado, una expectativa consta de un \emph{binding} (que en Gobstones puede ser una función, un procedimiento o el programa completo) y una \emph{inspección}. Para poder dar soporte a las guías que se pretendían construir para este trabajo, decidí implementar las siguientes inspecciones:
+
+\begin{itemize}
+  \caracteristica{HasBinding} que indica si el binding está definido.
+  \caracteristica{HasUsage} que indica si dentro del binding se utiliza una cierta función o procedimiento.
+  \caracteristica{HasRepeat} que indica si el binding utiliza repetición simple.
+  \caracteristica{HasArity} que indica si el binding posee cierta cantidad de parámetros.
+\end{itemize}
+
+Para poder verificar si se cumple una expectativa dentro de una solución es necesario recorrer el AST de la misma buscando el patrón correspondiente. La solución típica a este tipo de problemas es realizar \emph{pattern matching} sobre la estructura del árbol, pero en nuestro caso surge un problema: la representación del AST que brinda \pyGob\ no sigue ningún estándar (ver anexo \ref{app:ASTGobstones}) y por lo tanto para poder manipularla habría que primero escribir un parser que la transforme en un árbol de Ruby, lo cual implicaría un esfuerzo que excedería al tiempo establecido para la finalización del presente trabajo.
+
+Descartado ese camino, opté por utilizar expresiones regulares directamente sobre la salida ofrecida por \pyGob. Al trabajar a nivel de texto se pierde la semántica de árbol, por lo cual no es sencillo descubrir a qué árbol pertenece un cierto nodo, lo cual trae como consecuencia que ciertas expectativas sean validadas sobre todo el AST y no sobre el binding correspondiente, pudiendo arrojar falsos positivos.
+
+Sin embargo, la solución resulta lo suficientemente buena para ejercicios en los cuales el estudiante sólo tenga que definir un programa, un procedimiento o una función, ya que habrá un sólo binding en todo el AST.

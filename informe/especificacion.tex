@@ -13,7 +13,7 @@ El ejercicio es la mínima unidad de contenido: se trata de una descripción de 
 
   Por ejemplo, si tenemos una función \codigo{dobleDe(numero)} que recibe un número y devuelve su doble, una prueba posible sería que \codigo{dobleDe(2)} da como resultado \codigo{4}.
 
-  \caracteristica{Expectativas} evalúan que la solución resuelva el problema de forma adecuada, es decir, que se utilicen las herramientas correctas.
+  \caracteristica{Expectativas} evalúan que la solución resuelva el problema de forma adecuada, es decir, que se utilicen las herramientas correctas. Están compuestas por un \emph{binding}, que representa un identificador dentro del programa (nombre de función, procedimiento, etc), y una \emph{inspección}, que determinan qué es lo que se quiere validar (por ejemplo: ¿usa una repetición condicional? o ¿usa a X función?).
 
   Supongamos que ahora queremos hacer la función \codigo{cuadrupleDe(numero)}, que tome un número y devuelve su cuadruple, y queremos que el estudiante la implemente en términos de \codigo{dobleDe} (ya que multiplicar por 4 es lo mismo que multiplicar 2 veces por 2). En ese caso nuestro objetivo sería \codigo{cuadrupleDe(numero) \textit{debe usar} dobleDe(numero)}.
 
@@ -58,15 +58,15 @@ Para poder implementar un \runner, es necesario que el lenguaje cumpla ciertas c
 
 La primera de ellas: tiene que poderse ejecutar por línea de comandos, sin la intervención de un humano. Si bien esto puede sonar trivial cuando de lenguajes industriales se trata, no lo es para este tipo de herramientas didácticas. Suelen estar fuertemente acopladas con el entorno visual que proveen para programar, haciendo que no sea posible ejecutar fuera de allí (lo que imposibilita, por ejemplo, crear un \runner\ que ejecute un programa hecho en Scratch). Afortunadamente \pyGob\ sí cuenta con dicha posibilidad, pueden ejecutarse programas por la consola y visualizar el resultado en formato GBB\sepfootnote{GBB} o HTML.
 
-Lo siguiente es poder probar que la solución del estudiante sea correcta. De un programa Gobstones pueden interesarnos validar dos cosas: dado un tablero inicial conocido, el problema tiene que llegar a un tablero final esperado (si se trata de un procedimiento) o tiene que retornar un valor esperado (si se trata de una función). Este tipo de pruebas se denominan unitarias y suelen ser escritas en algún framework específico del lenguaje con el que se está trabajando: JUnit para Java, rspec para Ruby, mocha para Javascript,etcétera. En este caso tuve que desarrollarlo yo, ya que hasta el momento no existía un framework así para Gobstones.
+Lo siguiente es poder probar que la solución del estudiante sea correcta. De un programa Gobstones pueden interesarnos validar dos cosas: dado un tablero inicial conocido, el problema tiene que llegar a un tablero final esperado (si se trata de un programa o un procedimiento) o tiene que retornar un valor esperado (si se trata de una función). Este tipo de pruebas se denominan unitarias y suelen ser escritas en algún framework específico del lenguaje con el que se está trabajando: JUnit para Java, rspec para Ruby, mocha para Javascript,etcétera. En este caso tuve que desarrollarlo yo, ya que hasta el momento no existía un framework así para Gobstones.
 
 \sepfootnotecontent
   {AST}
   {Representación de árbol de la estructura sintáctica abstracta (simplificada) del código fuente, donde cada nodo del árbol denota una construcción que ocurre en el código fuente. La sintaxis es abstracta en el sentido que no representa cada detalle que aparezca en la sintaxis verdadera, omitiendo, por ejemplo, comentarios, espacios y saltos de línea.}
 
-Por último, se tiene que poder analizar el código del estudiante para verificar si se cumplen las expectativas. La forma más sencilla de lograrlo es recorriendo el árbol de sintaxis abstracta (AST\sepfootnote{AST}), buscando que existan ciertos patrones. Si bien \pyGob\ ya proveía una manera de obtener el AST, tuve que solicitarle al equipo de desarrollo algunos cambios que comentaré más adelante.
+Por último, se tiene que poder analizar el código del estudiante para verificar si se cumplen las expectativas. La forma más sencilla de lograrlo es recorriendo el árbol de sintaxis abstracta (AST\sepfootnote{AST}), buscando que existan ciertos patrones. Si bien \pyGob\ ya proveía una manera de obtener el AST, tuve que solicitarle al equipo de desarrollo algunos cambios que comentaré en la siguiente sección.
 
-\subsection{Cambios realizados en \pyGob}
+\subsection{Cambios necesarios en \pyGob}
 \sepfootnotecontent
   {Abalorios}
   {En paralelo al desarrollo de este trabajo y sin saber de la existencia del mismo, surgió una iniciativa similar por parte del Lic. Pablo Barenbaum, docente de la cátedra Introducción a la Programación en UNQ. Al enterarnos de que estabamos trabajando en proyectos similares, se optó por pausar el desarrollo de Abalorios.}
@@ -82,7 +82,7 @@ La visualización HTML del tablero que proveía el intérprete era poco atractiv
   \includegraphics[scale=0.5]{images/tablero-html-viejo.png}
   \includegraphics[scale=0.4]{images/tablero-html-nuevo.png}
 
-  \caption{Representación HTML de un tablero. La versión de la izquierda era la existente hasta la realización del presente trabajo.}
+  \caption{Representación HTML de un tablero Gobstones. A la izquierda, la versión implementada en \pyGob\ hasta la realización del presente trabajo; a la derecha, la nueva versión.}
   \label{fig:TableroHTML}
 \end{figure}
 
@@ -93,3 +93,12 @@ La visualización HTML del tablero que proveía el intérprete era poco atractiv
 Con la generación del AST ocurrieron dos problemas puntuales, que fueron resueltos por el equipo desarrollador al poco tiempo de haberlos reportado\sepfootnote{IssueAST}.
 
 El primero fue que además de generarse el AST se ejecutaba el código, inhabilitando la posibilidad de correr expectativas sobre programas sintácticamente válidos que arrojaban error en tiempo de ejecución. El siguiente problema fue que no era posible generar el AST de una única función o procedimiento, lo cual obligaba a tener que correr las expectativas sobre el código del estudiante y el provisto por el docente, sin poder diferenciar fácilmente qué parte se estaba analizando.
+
+\subsection{Cambios necesarios en Mumuki}
+Mumuki no permitía visualizar el resultado de ejecución de una solución, sólo se veían aquellas pruebas que habían fallado. Si bien ese enfoque es razonable para lenguajes tradicionales, resulta muy limitante para Gobstones porque eliminaría el componente visual del mismo, fuerte atractivo para los estudiantes.
+
+\sepfootnotecontent
+  {PullRequestHTML}
+  {Pueden verse los cambios realizados en \url{https://github.com/mumuki/mumuki-atheneum/pull/161}.}
+
+Para solucionar ese problema, extendí algunos componentes\sepfootnote{PullRequestOutput} de Mumuki para que los \runner s pudieran proveer una salida HTML como parte de la ejecución.

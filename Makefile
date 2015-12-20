@@ -1,2 +1,2 @@
 watch:
-	cd informe && latexmk -pvc -pdf main.tex
+	cd informe && latexmk -pvc -pdf main.tex -shell-escape

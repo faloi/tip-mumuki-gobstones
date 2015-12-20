@@ -1,18 +1,20 @@
 sudo: false
+language: python
 before_install:
 - mkdir -p $HOME/texlive && curl -L https://github.com/urdh/texlive-blob/releases/download/20150712/texlive.tar.xz
   | tar -JxC $HOME/texlive
 install:
 - PATH=$HOME/texlive/bin/x86_64-linux:$PATH
+- pip install Pygments
 - tlmgr update --self
 - tlmgr install babel-spanish
 - export GIT_TAG=v`date +%Y-%m-%d-%H-%M-%S`
 script:
 - mkdir _build
 - cd informe
-- latexmk -pdf -output-directory=../_build main.tex
+- latexmk -pdf -shell-escape
+- mv main.pdf ../_build/TIP-Aloi-MumukiGobstones-$GIT_TAG.pdf
 - cd ..
-- mv _build/main.pdf _build/TIP-Aloi-MumukiGobstones-$GIT_TAG.pdf
 before_deploy:
 - git config --global user.email "builds@travis-ci.com"
 - git config --global user.name "Travis CI"
