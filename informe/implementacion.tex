@@ -28,14 +28,7 @@ Para representar estas pruebas utilicé el formato YAML\sepfootnote{YAML}, princ
 
 \borrador{Contar brevemente cómo se implementó: se crean archivos temporales con el programa y los tableros iniciales, se ejecuta, se parsea el resultado de la consola o del archivo GBB de salida.}
 
-\subsection{Trabajando con \mumukit}
-En particular, \mumukit\ exige que se implementen al menos dos métodos:
-\begin{itemize}
-  \item{\codigo{compile}: que recibe la solución del estudiante, el código extra provisto por el docente y el código de las pruebas, y debe encargarse de unirlos;}
-  \item{\codigo{run\_test\_command}: que recibe el archivo generado por el método anterior y debe encargarse de ejecutar las pruebas y devolver el resultado.}
-\end{itemize}
-
-En cualquier otro \runner, programar el \codigo{compile} es muy sencillo: como todos los bloques de código están expresados en el lenguaje que se intenta probar, basta con yuxtaponerlos. Como vimos anteriormente, un test unitario en Gobstones no es un archivo de código sino una representación YAML de una serie de configuraciones, y eso es lo que se genera en este caso.
+\subsection{Chequeo de expectativas}
 
 \subsection{Extensiones a Mumuki}
 \borrador{
@@ -45,6 +38,15 @@ En cualquier otro \runner, programar el \codigo{compile} es muy sencillo: como t
   \end{itemize}
 }
 
-\subsection{Mumuki Gobstones Server}
-\subsubsection{Integración con Stones Spec}
+\subsection{Mumuki Gobstones \runner}
+Como se comentó anteriormente, la implementación está guiada por \mumukit\. Para ello, la gema exige que se implementen al menos dos métodos:
+\begin{itemize}
+  \item{\codigo{compile}: que recibe la solución del estudiante, el código extra provisto por el docente y el código de las pruebas, y debe encargarse de unirlos;}
+  \item{\codigo{run\_test\_command}: que recibe el archivo generado por el método anterior y debe encargarse de ejecutar las pruebas y devolver el resultado.}
+\end{itemize}
+
+En cualquier otro \runner, programar el \codigo{compile} es muy sencillo: como todos los bloques de código están expresados en el lenguaje que se intenta probar, basta con yuxtaponerlos. Como vimos anteriormente, un test unitario en Gobstones no es un archivo de código sino una representación YAML de una serie de configuraciones, y eso es lo que se debe generar en este caso. Al YAML que llega con las pruebas se le agrega entonces un nuevo atributo \codigo{source} con el código extra y la solución del estudiante concatenadas y eso se enviará a Stones Spec para su ejecución.
+
+Al haber delegado la ejecución de las pruebas, sólo resta implementar el chequeo de expectativas y ejecutar todo en el \codigo{run\_test\_command}.
+
 \subsubsection{Chequeo de expectativas}
