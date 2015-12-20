@@ -13,7 +13,7 @@ El ejercicio es la mínima unidad de contenido: se trata de una descripción de 
 
   Por ejemplo, si tenemos una función \codigo{dobleDe(numero)} que recibe un número y devuelve su doble, una prueba posible sería que \codigo{dobleDe(2)} da como resultado \codigo{4}.
 
-  \caracteristica{Expectativas} evalúan que la solución resuelva el problema de forma adecuada, es decir, que se utilicen las herramientas correctas.
+  \caracteristica{Expectativas} evalúan que la solución resuelva el problema de forma adecuada, es decir, que se utilicen las herramientas correctas. Están compuestas por un \emph{binding}, que representa un identificador dentro del programa (nombre de función, procedimiento, etc), y una \emph{inspección}, que determinan qué es lo que se quiere validar (por ejemplo: ¿usa una repetición condicional? o ¿usa a X función?).
 
   Supongamos que ahora queremos hacer la función \codigo{cuadrupleDe(numero)}, que tome un número y devuelve su cuadruple, y queremos que el estudiante la implemente en términos de \codigo{dobleDe} (ya que multiplicar por 4 es lo mismo que multiplicar 2 veces por 2). En ese caso nuestro objetivo sería \codigo{cuadrupleDe(numero) \textit{debe usar} dobleDe(numero)}.
 
