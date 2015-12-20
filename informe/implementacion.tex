@@ -26,7 +26,7 @@ En el caso de un \emph{programa}, cada ejemplo constará de una dupla \codigo{(t
 
 Para representar estas pruebas utilicé el formato YAML\sepfootnote{YAML}, principalmente por su facilidad de escritura y su fácil integración con Ruby. Pueden verse algunos ejemplos en el apéndice \ref{app:Specs}.
 
-\borrador{Contar brevemente cómo se implementó: se crean archivos temporales con el programa y los tableros iniciales, se ejecuta, se parsea el resultado de la consola o del archivo GBB de salida.}
+Gran parte del trabajo se delega en \pyGob, siendo este el encargado de ejecutar los programas, retornando o bien el tablero final o bien el error que haya ocurrido. El rol de Stones Spec es entonces estructurar estos diferentes tipos de salida de manera que el formato sea siempre el mismo y realizar la comparación entre tableros, validando así si el tablero final obtenido coincide con el que se esperaba.
 
 \subsection{Mumuki Gobstones \runner}
 Como se comentó anteriormente, la implementación está guiada por \mumukit\. Para ello, la gema necesia que se implementen tres métodos:
