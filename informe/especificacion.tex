@@ -64,9 +64,9 @@ Lo siguiente es poder probar que la solución del estudiante sea correcta. De un
   {AST}
   {Representación de árbol de la estructura sintáctica abstracta (simplificada) del código fuente, donde cada nodo del árbol denota una construcción que ocurre en el código fuente. La sintaxis es abstracta en el sentido que no representa cada detalle que aparezca en la sintaxis verdadera, omitiendo, por ejemplo, comentarios, espacios y saltos de línea.}
 
-Por último, se tiene que poder analizar el código del estudiante para verificar si se cumplen las expectativas. La forma más sencilla de lograrlo es recorriendo el árbol de sintaxis abstracta (AST\sepfootnote{AST}), buscando que existan ciertos patrones. Si bien \pyGob\ ya proveía una manera de obtener el AST, tuve que solicitarle al equipo de desarrollo algunos cambios que comentaré más adelante.
+Por último, se tiene que poder analizar el código del estudiante para verificar si se cumplen las expectativas. La forma más sencilla de lograrlo es recorriendo el árbol de sintaxis abstracta (AST\sepfootnote{AST}), buscando que existan ciertos patrones. Si bien \pyGob\ ya proveía una manera de obtener el AST, tuve que solicitarle al equipo de desarrollo algunos cambios que comentaré en la siguiente sección.
 
-\subsection{Cambios realizados en \pyGob}
+\subsection{Cambios necesarios en \pyGob}
 \sepfootnotecontent
   {Abalorios}
   {En paralelo al desarrollo de este trabajo y sin saber de la existencia del mismo, surgió una iniciativa similar por parte del Lic. Pablo Barenbaum, docente de la cátedra Introducción a la Programación en UNQ. Al enterarnos de que estabamos trabajando en proyectos similares, se optó por pausar el desarrollo de Abalorios.}
@@ -93,3 +93,12 @@ La visualización HTML del tablero que proveía el intérprete era poco atractiv
 Con la generación del AST ocurrieron dos problemas puntuales, que fueron resueltos por el equipo desarrollador al poco tiempo de haberlos reportado\sepfootnote{IssueAST}.
 
 El primero fue que además de generarse el AST se ejecutaba el código, inhabilitando la posibilidad de correr expectativas sobre programas sintácticamente válidos que arrojaban error en tiempo de ejecución. El siguiente problema fue que no era posible generar el AST de una única función o procedimiento, lo cual obligaba a tener que correr las expectativas sobre el código del estudiante y el provisto por el docente, sin poder diferenciar fácilmente qué parte se estaba analizando.
+
+\subsection{Cambios necesarios en Mumuki}
+Mumuki no permitía visualizar el resultado de ejecución de una solución, sólo se veían aquellas pruebas que habían fallado. Si bien ese enfoque es razonable para lenguajes tradicionales, resulta muy limitante para Gobstones porque eliminaría el componente visual del mismo, fuerte atractivo para los estudiantes.
+
+\sepfootnotecontent
+  {PullRequestHTML}
+  {Pueden verse los cambios realizados en \url{https://github.com/mumuki/mumuki-atheneum/pull/161}.}
+
+Para solucionar ese problema, extendí algunos componentes\sepfootnote{PullRequestOutput} de Mumuki para que los \runner s pudieran proveer una salida HTML como parte de la ejecución.
