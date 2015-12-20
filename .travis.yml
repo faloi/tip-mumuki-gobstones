@@ -8,8 +8,6 @@ install:
 - pip install Pygments
 - tlmgr update --self
 - tlmgr install babel-spanish
-- tlmgr install minted
-- tlmgr install appendix
 - export GIT_TAG=v`date +%Y-%m-%d-%H-%M-%S`
 script:
 - mkdir _build
