@@ -29,14 +29,29 @@ Para representar estas pruebas utilicé el formato YAML\sepfootnote{YAML}, princ
 \borrador{Contar brevemente cómo se implementó: se crean archivos temporales con el programa y los tableros iniciales, se ejecuta, se parsea el resultado de la consola o del archivo GBB de salida.}
 
 \subsection{Mumuki Gobstones \runner}
-Como se comentó anteriormente, la implementación está guiada por \mumukit\. Para ello, la gema exige que se implementen al menos dos métodos:
+Como se comentó anteriormente, la implementación está guiada por \mumukit\. Para ello, la gema necesia que se implementen tres métodos:
 \begin{itemize}
   \item{\codigo{compile}: que recibe la solución del estudiante, el código extra provisto por el docente y el código de las pruebas, y debe encargarse de unirlos;}
   \item{\codigo{run\_test\_command}: que recibe el archivo generado por el método anterior y debe encargarse de ejecutar las pruebas y devolver el resultado.}
+  \item{\codigo{run\_expectations}: que recibe la solución del estudiante y la colección de expectativas a evaluar, y debe encargarse de informar cuáles se cumplieron y cuáles no.}
 \end{itemize}
 
-En cualquier otro \runner, programar el \codigo{compile} es muy sencillo: como todos los bloques de código están expresados en el lenguaje que se intenta probar, basta con yuxtaponerlos. Como vimos anteriormente, un test unitario en Gobstones no es un archivo de código sino una representación YAML de una serie de configuraciones, y eso es lo que se debe generar en este caso. Al YAML que llega con las pruebas se le agrega entonces un nuevo atributo \codigo{source} con el código extra y la solución del estudiante concatenadas y eso se enviará a Stones Spec para su ejecución.
+En cualquier otro \runner, programar el \codigo{compile} es muy sencillo: como todos los bloques de código están expresados en el lenguaje que se intenta probar, basta con yuxtaponerlos. Como vimos anteriormente, un test unitario en Gobstones no es un archivo de código sino una representación YAML de una serie de configuraciones, y eso es lo que se debe generar en este caso. Al YAML que llega con las pruebas se le agrega entonces un nuevo atributo \codigo{source} con el código extra y la solución del estudiante concatenadas.
 
-Al haber delegado la ejecución de las pruebas, sólo resta implementar el chequeo de expectativas y ejecutar todo en el \codigo{run\_test\_command}.
+Al haber delegado la ejecución de las pruebas, el \codigo{run\_test\_command} resulta trivial: basta con enviar la estructura creada a Stones Spec para que ejecute las pruebas y nos informe los resultados. Hecho esto, unicamente resta resolver el chequeo de expectativas.
 
 \subsubsection{Chequeo de expectativas}
+Como ya fue explicado, una expectativa consta de un \emph{binding} (que en Gobstones puede ser una función, un procedimiento o el programa completo) y una \emph{inspección}. Para poder dar soporte a las guías que se pretendían construir para este trabajo, decidí implementar las siguientes inspecciones:
+
+\begin{itemize}
+  \caracteristica{HasBinding} que indica si el binding está definido.
+  \caracteristica{HasUsage} que indica si dentro del binding se utiliza una cierta función o procedimiento.
+  \caracteristica{HasRepeat} que indica si el binding utiliza repetición simple.
+  \caracteristica{HasArity} que indica si el binding posee cierta cantidad de parámetros.
+\end{itemize}
+
+Para poder verificar si se cumple una expectativa dentro de una solución es necesario recorrer el AST de la misma buscando el patrón correspondiente. La solución típica a este tipo de problemas es realizar \emph{pattern matching} sobre la estructura del árbol, pero en nuestro caso surge un problema: la representación del AST que brinda \pyGob\ no sigue ningún estándar (ver anexo \ref{app:ASTGobstones}) y por lo tanto para poder manipularla habría que primero escribir un parser que la transforme en un árbol de Ruby, lo cual implicaría un esfuerzo que excedería al tiempo establecido para la finalización del presente trabajo.
+
+Descartado ese camino, opté por utilizar expresiones regulares directamente sobre la salida ofrecida por \pyGob. Al trabajar a nivel de texto se pierde la semántica de árbol, por lo cual no es sencillo descubrir a qué árbol pertenece un cierto nodo, lo cual trae como consecuencia que ciertas expectativas sean validadas sobre todo el AST y no sobre el binding correspondiente, pudiendo arrojar falsos positivos.
+
+Sin embargo, la solución resulta lo suficientemente buena para ejercicios en los cuales el estudiante sólo tenga que definir un programa, un procedimiento o una función, ya que habrá un sólo binding en todo el AST.

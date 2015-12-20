@@ -73,3 +73,39 @@
 \end{listing}
 
 \end{appendices}
+
+\section{Representación del AST de un programa Gobstones}
+\label{app:ASTGobstones}
+
+\begin{listing}
+  \begin{minted}{javascript}
+  procedure MoverOeste3()
+  {
+    repeat(8) { Mover(Oeste) }
+  }
+  \end{minted}
+
+  \begin{minted}{python}
+  AST(program
+      AST()
+      AST(
+          AST(procedure
+              MoverOeste3
+              AST()
+              AST(
+                  AST(repeat
+                      AST(literal
+                          8)
+                      AST(block
+                          AST(
+                              AST(procCall
+                                  Mover
+                                  AST(
+                                      AST(literal
+                                          Oeste)))))))
+              None)))
+  \end{minted}
+
+  \caption{Un procedimiento Gobstones y la representación de su AST que brinda \pyGob.}
+  \label{lst:ASTGobstones}
+\end{listing}
