@@ -35,12 +35,14 @@ A grandes rasgos, la comunicación se realiza de la siguiente manera:
   \centering
 
   \begin{sequencediagram}
-    \newthread{estudiante}{Estudiante}{}
-    \newinst{atheneum}{Atheneum}{}
-    \newinst{runner}{Runner}{}
+    \tikzstyle{inststyle}=[anchor=west, minimum width=6cm]
+
+    \newthread{estudiante}{Estudiante}
+    \newinst{atheneum}{Atheneum}
+    \newinst{runner}{Runner}
 
     \begin{call}{estudiante}{Validar(solucion)}{atheneum}{resultado}
-      \begin{call}{atheneum}{Validar(solucion, pruebas, expectativas, codigo\_adicional)}{runner}{resultado}
+      \begin{call}{atheneum}{\shortstack{Validar (solucion, pruebas,\\ expectativas, codigo\_adicional)}}{runner}{resultado}
       \end{call}
     \end{call}
   \end{sequencediagram}
