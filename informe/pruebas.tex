@@ -2,16 +2,24 @@
 
 \section{Pruebas}
 \subsection{Testing automatizado del código}
-\borrador{
-  Porcentaje de cobertura, tipos de tests que existen.
-}
+
+\sepfootnotecontent
+  {TDD}
+  {El \emph{desarrollo guiado por pruebas} o TDD (sigla en inglés para \textit{``test-driven development''}) es un proceso de desarrollo de software que se basa en la repetición de un ciclo de desarrollo muy breve: en primer lugar se escribe un caso de prueba automatizado que define el comportamiento esperado, luego se produce la mínima cantidad de código para que la prueba pase y finalmente se refactoriza el código para que cumpla con estándares aceptables.}
+
+\sepfootnotecontent
+  {CoverageCodeClimate}
+  {Pueden verse más estadísticas sobre la cobertura en \url{https://codeclimate.com/github/mumuki/mumuki-gobstones-server/coverage}.}
+
+Gran parte del código necesario para llevar a cabo este trabajo fue desarrollado utilizando la técnica TDD\sepfootnote{TDD}, por lo cual existe un nivel de cobertura de tests automatizados cercano al 100\%\sepfootnote{CoverageCodeClimate}.
+
+Dentro de Stones Spec, hay pruebas que verifican que la salida sea correcta para distintos programas de entrada: con errores en tiempo de compilación o ejecución, con errores de sitnaxis, con resultados correctos, con resultados incorrectos. Se prueba también que se parsee correctamente la salida de \pyGob\ eliminando todo aquello que no aporta información al usuario final, así como también las distintas opciones de configuración que soporta el framework (títulos de los tests, chequeo de la posición del cabezal, pasaje de parámetros).
+
+En el \runner\ se agregan los tests unitarios para el chequeo de cada una de las expectativas soportadas, así como también algunos tests de integración que simulan la comunicación con el Atheneum, verificando así que todo el proceso se realiza correctamente.
 
 \subsection{Utilización de las herramientas en un colegio secundario}
-\borrador{
-  \begin{itemize}
-    \item background de la escuela
-    \item cómo se utilizó la herramienta
-    \item aceptación por parte de los estudiantes
-    \item quizás disparar una encuesta? ojo, queda poco tiempo y a la mayoría de los pibes ya no los veo
-  \end{itemize}
-}
+Si bien las pruebas automatizadas brindan cierto nivel de confianza sobre la calidad del software, nada nos dicen sobre su utilidad. Es por ello que en la propuesta del presente trabajo se proponía la creación de 3 guías de ejercicios que permitieran poner en funcionamiento la herramienta con estudiantes.
+
+Al momento de escribir este informe me desempeño como docente de un curso de programación destinado a estudiantes del quinto año del Instituto Sagrado Corazón Al.Cal, bajo la orientación Tecnicatura en Programación Informática. Gran parte del interés por la temática elegida surge de mi inquietud como educador de mejorar constantemente mis prácticas, utilizando la tecnología como medio para poder realizar un seguimiento más personalizado de mis estudiantes. Es por ello que las guías creadas (introducción, procedimientos y repetición simple) tuvieron a mis estudiantes como destinatarios, sirviendo en algunos casos como repaso de temas ya vistos y en otros como primer acercamiento a conceptos nuevos.
+
+Los resultados fueron muy positivos. Al ofrecerles un entorno más controlado y feedback automatizado sobre los errores, muchos de ellos pudieron terminar de comprender los temas propuestos. Gracias al análisis de las soluciones enviadas, tuve la oportunidad de ver estados intermedios que dan cuenta de cómo cada estudiante aprende de sus errores, algo que es muy difícil lograr sin una herramienta de este estilo (sería necesario poder sentarse varias horas al lado de un estudiante viendo cómo elabora su solución, procurando no influenciar en el proceso).
