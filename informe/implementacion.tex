@@ -14,11 +14,11 @@ En el momento en que empecé a planificar la integración, Mumuki soportaba sola
 Ante este escenario, resulta evidente que la elección de Ruby como lenguaje de soporte para el \runner\ de Gobstones era la más acertada.
 
 \subsection{Stones Spec}
-Una vez elegida la tecnología, me aboqué a la primera tarea: crear un framework para poder correr tests unitarios sobre programas, procedimientos o funciones Gobstones. En cualquier lenguaje de propósito general, estos frameworks están codificados utilizando el mismo lenguaje sobre el cual se van a ejecutar las pruebas pero como Gobstones no es un lenguaje de propósito general, esto no era una opción. Para no introducir otro nuevo lenguaje, elegí utilizar también Ruby para esta tarea.
+Una vez elegida la tecnología, me aboqué a la primera tarea: crear un framework para poder correr tests unitarios sobre programas, procedimientos o funciones Gobstones. En cualquier lenguaje de propósito general, estos frameworks están codificados utilizando el mismo lenguaje sobre el cual se van a ejecutar las pruebas, pero como Gobstones no es un lenguaje de propósito general, esto no era una opción. Para no introducir otro nuevo lenguaje, elegí utilizar también Ruby para esta tarea.
 
-Tras analizar algunos ejercicios de las guías de Introducción a la Programación, diseñé un modelo de prueba que consta fundamentalmente de dos cosas: un \emph{sujeto} y una colección de \emph{ejemplos}. El sujeto es el nombre del procedimiento o función que se desea probar; si se lo omite, las pruebas se realizan sobre el programa completo. Los ejemplos son uno o más escenarios sobre los cuales se desea probar al sujeto, cómo están compuestos esos ejemplos dependerá del tipo de sujeto.
+Tras analizar algunos ejercicios de las guías de Introducción a la Programación, diseñé un modelo de prueba que consta fundamentalmente de dos cosas: un \emph{sujeto} y una colección de \emph{ejemplos}. El sujeto es el nombre del procedimiento o función que se desea probar; si se lo omite, las pruebas se realizan sobre el programa completo. Los ejemplos son uno o más escenarios sobre los cuales se desea probar al sujeto; cómo están compuestos esos ejemplos dependerá del tipo de sujeto.
 
-En el caso de un \emph{programa}, cada ejemplo constará de una dupla \codigo{(tablero inicial, tablero final)}; para un \emph{procedimiento}, deberán especificarse también los argumentos con los cuales será ejecutado, resultando en una terna \codigo{(parámetros, tablero inicial, tablero final)}; y para una \emph{función} deberá especificarse el resultado esperado en vez del tablero final, resultando en una terna \codigo{(parámetros, tablero inicial, resultado)}.
+En el caso de un \emph{programa}, cada ejemplo constará de una dupla \codigo{(tablero inicial, tablero final)}; para un \emph{procedimiento} deberán especificarse también los argumentos con los cuales será ejecutado, resultando en una terna \codigo{(parámetros, tablero inicial, tablero final)}; y para una \emph{función} deberá especificarse el resultado esperado en vez del tablero final, resultando en una terna \codigo{(parámetros, tablero inicial, resultado)}.
 
 \sepfootnotecontent
   {YAML}
@@ -29,7 +29,7 @@ Para representar estas pruebas utilicé el formato YAML\sepfootnote{YAML}, princ
 Gran parte del trabajo se delega en \pyGob, siendo este el encargado de ejecutar los programas, retornando o bien el tablero final o bien el error que haya ocurrido. El rol de Stones Spec es entonces estructurar estos diferentes tipos de salida de manera que el formato sea siempre el mismo y realizar la comparación entre tableros, validando así si el tablero final obtenido coincide con el que se esperaba.
 
 \subsection{Mumuki Gobstones \runner}
-Como se comentó anteriormente, la implementación está guiada por \mumukit\. Para ello, la gema necesia que se implementen tres métodos:
+Como se comentó anteriormente, la implementación está guiada por \mumukit. Para ello, la gema necesita que se implementen tres métodos:
 \begin{itemize}
   \item{\codigo{compile}: que recibe la solución del estudiante, el código extra provisto por el docente y el código de las pruebas, y debe encargarse de unirlos;}
   \item{\codigo{run\_test\_command}: que recibe el archivo generado por el método anterior y debe encargarse de ejecutar las pruebas y devolver el resultado.}
@@ -54,4 +54,4 @@ Para poder verificar si se cumple una expectativa dentro de una solución es nec
 
 Descartado ese camino, opté por utilizar expresiones regulares directamente sobre la salida ofrecida por \pyGob. Al trabajar a nivel de texto se pierde la semántica de árbol, por lo cual no es sencillo descubrir a qué árbol pertenece un cierto nodo, lo cual trae como consecuencia que ciertas expectativas sean validadas sobre todo el AST y no sobre el binding correspondiente, pudiendo arrojar falsos positivos.
 
-Sin embargo, la solución resulta lo suficientemente buena para ejercicios en los cuales el estudiante sólo tenga que definir un programa, un procedimiento o una función, ya que habrá un sólo binding en todo el AST.
+Sin embargo, la solución resulta lo suficientemente buena para ejercicios en los cuales el estudiante sólo tenga que definir un programa, un procedimiento o una función, ya que habrá un solo binding en todo el AST.
